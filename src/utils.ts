@@ -15,12 +15,12 @@ const sortReviews = (reviews: ReviewType[]): ReviewType[] => {
 
 export function getScrollLock () {
   const body = document.getElementById('body') as HTMLElement;
-  body.classList.add('scroll-lock')
+  body.classList.add('scroll-lock');
 }
 
 export function deleteScrollLock () {
   const body = document.getElementById('body') as HTMLElement;
-  body.classList.remove('scroll-lock')
+  body.classList.remove('scroll-lock');
 }
 
 export default sortReviews;

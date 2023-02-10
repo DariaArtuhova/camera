@@ -1,8 +1,8 @@
-import { makeReview, makeReviews} from "../../mocks";
-import {InitialState, reviewReducer} from "./review-reduser";
-import {REVIEW_STEP} from "../../const";
-import {ReviewType} from "../../types/review-type";
-import {fetchCurrentCameraAction, fetchReviewsAction} from "../../services/api-actions";
+import { makeReview, makeReviews} from '../../mocks';
+import {InitialState, reviewReducer} from './review-reduser';
+import {REVIEW_STEP} from '../../const';
+import {ReviewType} from '../../types/review-type';
+import {fetchCurrentCameraAction, fetchReviewsAction} from '../../services/api-actions';
 
 describe('Reducer: cameraReducer', ()=> {
   let state: InitialState;
@@ -23,7 +23,7 @@ describe('Reducer: cameraReducer', ()=> {
   });
 
   it('should update state by load reviews', () => {
-    state = {...state, review: reviews}
+    state = {...state, review: reviews};
     expect(reviewReducer(state, {type: fetchReviewsAction.fulfilled.type, payload: reviews}))
       .toEqual({...state, review: reviews});
   });
@@ -33,4 +33,4 @@ describe('Reducer: cameraReducer', ()=> {
     expect(reviewReducer(state, {type: fetchCurrentCameraAction.fulfilled.type, payload: currentReview}))
       .toEqual({...state, currentReview: currentReview});
   });
-})
+});

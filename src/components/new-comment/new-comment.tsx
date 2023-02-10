@@ -5,7 +5,7 @@ import {useForm} from 'react-hook-form';
 import {Ratings, ReviewType} from '../../types/review-type';
 import {NewReviewSuccess} from '../new-review-success/new-review-success';
 import {sendNewReview} from '../../services/api-actions';
-import {deleteScrollLock, getScrollLock} from "../../utils";
+import {deleteScrollLock, getScrollLock} from '../../utils';
 
 type newCommentProps = {
   isVisible: boolean;
@@ -18,15 +18,15 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
   const onKeydown = ({ key }: KeyboardEvent) => {
     switch (key) {
       case 'Escape':
-        deleteScrollLock()
-        onClose()
-        break
+        deleteScrollLock();
+        onClose();
+        break;
     }
-  }
+  };
   useEffect(() => {
-    document.addEventListener('keydown', onKeydown)
-    return () => document.removeEventListener('keydown', onKeydown)
-  })
+    document.addEventListener('keydown', onKeydown);
+    return () => document.removeEventListener('keydown', onKeydown);
+  });
   type NewReview = Pick<ReviewType, 'userName' | 'advantage' | 'disadvantage' | 'rating' | 'cameraId' | 'review'>;
 
   const [isModal, setModal] = useState(false);
@@ -51,8 +51,8 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
       disadvantage: review.disadvantage,
       rating: review.rating,
     }));
-    onClose()
-    getScrollLock()
+    onClose();
+    getScrollLock();
     setModal(true);
   };
   return (
@@ -226,8 +226,8 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
       <NewReviewSuccess
         isVisible={isModal}
         onClose={() => {
-          deleteScrollLock()
-          setModal(false)
+          deleteScrollLock();
+          setModal(false);
         }}
       />
     </>

@@ -5,13 +5,13 @@ import {memo, useState} from 'react';
 import {NewComment} from '../new-comment/new-comment';
 import {getCurrentCameras} from '../../store/camera/camera-selector';
 import {CameraType} from '../../types/camera-type';
-import {deleteScrollLock, getScrollLock} from "../../utils";
+import {deleteScrollLock, getScrollLock} from '../../utils';
 
 export function ReviewList():JSX.Element {
   const reviewCounter = useAppSelector(getMoreReviews);
   const [isModal, setModal] = useState(false);
   const currentCamera = useAppSelector(getCurrentCameras) as CameraType;
-  const sortedReviews = useAppSelector(getSortedReviews).slice(0, 10);
+  const sortedReviews = useAppSelector(getSortedReviews).slice(0, 30);
   return (
     <>
       <section className="review-block">
@@ -19,9 +19,11 @@ export function ReviewList():JSX.Element {
           <div className="page-content__headed">
             <h2 className="title title--h3">Отзывы</h2>
             <button className="btn" type="button" onClick={() => {
-              getScrollLock()
-              setModal(true)
-            }}>Оставить свой отзыв</button>
+              getScrollLock();
+              setModal(true);
+            }}
+            >Оставить свой отзыв
+            </button>
           </div>
           <ul className="review-block__list">
             {sortedReviews
@@ -33,12 +35,12 @@ export function ReviewList():JSX.Element {
       <NewComment
         isVisible={isModal}
         onClose={() => {
-          deleteScrollLock()
-          setModal(false)
+          deleteScrollLock();
+          setModal(false);
         }}
         cameraId={currentCamera.id}
       />
     </>
   );
 }
-export default memo(ReviewList)
+export default memo(ReviewList);

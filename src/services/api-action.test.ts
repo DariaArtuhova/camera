@@ -3,10 +3,10 @@ import thunk, {ThunkDispatch} from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {ApiRoute} from '../const';
-import {Store} from "../types/store";
-import {createAPI} from "./api";
-import {makeCamera, makeCameras, makeReviews} from "../mocks";
-import {fetchCamerasAction, fetchPromoAction, fetchReviewsAction} from "./api-actions";
+import {Store} from '../types/store';
+import {createAPI} from './api';
+import { makeCameras} from '../mocks';
+import {fetchCamerasAction} from './api-actions';
 
 
 describe('Async actions', () => {

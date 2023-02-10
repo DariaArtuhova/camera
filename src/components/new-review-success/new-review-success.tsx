@@ -1,5 +1,5 @@
-import {useEffect} from "react";
-import {deleteScrollLock} from "../../utils";
+import {useEffect} from 'react';
+import {deleteScrollLock} from '../../utils';
 
 
 type newCommentProps = {
@@ -11,15 +11,15 @@ export function NewReviewSuccess({isVisible, onClose}:newCommentProps) : JSX.Ele
   const onKeydown = ({ key }: KeyboardEvent) => {
     switch (key) {
       case 'Escape':
-        onClose()
-        deleteScrollLock()
-        break
+        onClose();
+        deleteScrollLock();
+        break;
     }
-  }
+  };
   useEffect(() => {
-    document.addEventListener('keydown', onKeydown)
-    return () => document.removeEventListener('keydown', onKeydown)
-  })
+    document.addEventListener('keydown', onKeydown);
+    return () => document.removeEventListener('keydown', onKeydown);
+  });
   return (
     <div className={`modal ${
       isVisible ? 'is-active' : ''

@@ -1,7 +1,7 @@
-import {CamerasType} from "../../types/camera-type";
-import {makeCamera, makeCameras} from "../../mocks";
-import {cameraReducer, InitialState} from "./camera-reduser";
-import {fetchCamerasAction, fetchCurrentCameraAction, fetchSimilarCameras} from "../../services/api-actions";
+import {CamerasType} from '../../types/camera-type';
+import {makeCamera, makeCameras} from '../../mocks';
+import {cameraReducer, InitialState} from './camera-reduser';
+import {fetchCamerasAction, fetchCurrentCameraAction, fetchSimilarCameras} from '../../services/api-actions';
 
 describe('Reducer: cameraReducer', ()=> {
   let state: InitialState;
@@ -47,4 +47,4 @@ describe('Reducer: cameraReducer', ()=> {
     expect(cameraReducer(state, {type: fetchSimilarCameras.fulfilled.type, payload: currentSimilarCameras}))
       .toEqual({...state});
   });
-})
+});

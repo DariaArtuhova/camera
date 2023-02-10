@@ -1,15 +1,15 @@
-import {CamerasType, CameraType} from "./types/camera-type";
-import {random, name, internet, date, datatype,} from "faker";
-import {ReviewType} from "./types/review-type";
+import {CamerasType, CameraType} from './types/camera-type';
+import {random, name, internet, date, datatype,} from 'faker';
+import {ReviewType} from './types/review-type';
 
-export const makeCamera = (): CameraType  => ({
+export const makeCamera = (): CameraType => ({
   'id': datatype.number(),
   'name': name.title(),
   'vendorCode': internet.password(),
-  'type': "Коллекционная",
-  'category': "Видеокамера",
+  'type': 'Коллекционная',
+  'category': 'Видеокамера',
   'description': random.word(),
-  'level': "Профессиональный",
+  'level': 'Профессиональный',
   'rating': datatype.number(5),
   'price': datatype.number(),
   'previewImg': internet.url(),
@@ -17,7 +17,7 @@ export const makeCamera = (): CameraType  => ({
   'previewImgWebp': internet.url(),
   'previewImgWebp2x': internet.url(),
   'reviewCount': datatype.number(10),
-})
+});
 
 export const makeCameras = () => {
   const cameras: CamerasType = [];

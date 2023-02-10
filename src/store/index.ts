@@ -1,7 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {AppDispatch, Store} from '../types/store';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
-import {createAPI} from "../services/api";
+import {createAPI} from '../services/api';
 import {cameraReducer} from './camera/camera-reduser';
 import {reviewReducer} from './review/review-reduser';
 

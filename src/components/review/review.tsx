@@ -1,14 +1,17 @@
-import StarRating from 'react-svg-star-rating';
 import {ReviewType} from '../../types/review-type';
 import { format } from 'date-fns';
 import ru from 'date-fns/locale/ru';
+import Rating from '@mui/material/Rating';
+import {Icon} from '../icon/icon';
 
 
 type ReviewProps = {
   reviews: ReviewType;
 }
+
 export function Review({reviews}:ReviewProps):JSX.Element {
   const { userName, rating, advantage, disadvantage, review, createAt} = reviews;
+
   return (
     <li className="review-card">
       <div className="review-card__head">
@@ -16,11 +19,11 @@ export function Review({reviews}:ReviewProps):JSX.Element {
         <time className="review-card__data" dateTime="2022-04-13" >{format(new Date(createAt), 'd MMMM ', {locale: ru})}</time>
       </div>
       <div className="rate review-card__rate">
-        <StarRating initialRating={rating}
-          activeColor={'#ED9E41'}
-          roundedCorner
-          emptyColor={'currentColor'}
-          isReadOnly
+        <Rating
+          value={rating}
+          icon={<Icon style={{color:'#ED9E41'}}/>}
+          emptyIcon={<Icon style={{color:'#EAEAF8'}}/>}
+          readOnly
         />
         <p className="visually-hidden">Оценка: {rating}</p>
       </div>

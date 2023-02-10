@@ -4,8 +4,8 @@ import {Provider} from 'react-redux';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {AppRoute} from '../../const';
 import App from './app';
-import {ReviewType} from "../../types/review-type";
-import {makeCamera, makeCameras, makeReview} from "../../mocks";
+import {ReviewType} from '../../types/review-type';
+import {makeCamera, makeCameras, makeReview} from '../../mocks';
 
 const mockStore = configureMockStore();
 
@@ -23,7 +23,7 @@ const history = createMemoryHistory();
 
 const fakeApp = (
   <Provider store={store}>
-      <App />
+    <App />
   </Provider>
 );
 

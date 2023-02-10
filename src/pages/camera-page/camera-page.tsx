@@ -2,9 +2,8 @@ import {ReviewList} from '../../components/review-list/review-list';
 import {CameraType} from '../../types/camera-type';
 import {Link, useParams} from 'react-router-dom';
 import {AppRoute} from '../../const';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Helmet} from 'react-helmet';
-import StarRating from 'react-svg-star-rating';
 import {Header} from '../../components/header/header';
 import {Footer} from '../../components/footer/footer';
 import { useAppDispatch, useAppSelector} from '../../store';
@@ -14,6 +13,8 @@ import {Loading} from '../../components/loading/loading';
 import {SimilarList} from '../../components/similar-list/similar-list';
 import {getAllReviews} from '../../store/review/review-selector';
 import {ShowMoreButton} from '../../components/show-more-button/show-more-button';
+import Rating from '@mui/material/Rating';
+import {Icon} from '../../components/icon/icon';
 
 
 export function CameraPage() : JSX.Element {
@@ -82,11 +83,11 @@ export function CameraPage() : JSX.Element {
                 <div className="product__content">
                   <h1 className="title title--h3">{currentCamera.name}</h1>
                   <div className="rate product__rate">
-                    <StarRating initialRating={currentCamera.rating}
-                      activeColor={'#ED9E41'}
-                      roundedCorner
-                      emptyColor={'currentColor'}
-                      isReadOnly
+                    <Rating
+                      value={currentCamera.rating}
+                      icon={<Icon style={{color:'#ED9E41'}}/>}
+                      emptyIcon={<Icon style={{color:'#EAEAF8'}}/>}
+                      readOnly
                     />
                     <p className="visually-hidden">Рейтинг: {currentCamera.rating}</p>
                     <p className="rate__count">

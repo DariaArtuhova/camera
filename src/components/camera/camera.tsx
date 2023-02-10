@@ -1,7 +1,8 @@
 import {CameraType} from '../../types/camera-type';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
-import StarRating from 'react-svg-star-rating';
+import Rating from '@mui/material/Rating';
+import {Icon} from '../icon/icon';
 
 type CardProps = {
   camera: CameraType;
@@ -23,11 +24,11 @@ export function Camera({camera}: CardProps): JSX.Element {
       </div>
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          <StarRating initialRating={rating}
-            activeColor={'#ED9E41'}
-            roundedCorner
-            emptyColor={'currentColor'}
-            isReadOnly
+          <Rating
+            value={rating}
+            icon={<Icon style={{color:'#ED9E41'}}/>}
+            emptyIcon={<Icon style={{color:'#EAEAF8'}}/>}
+            readOnly
           />
           <p className="visually-hidden">Рейтинг: {rating}</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
