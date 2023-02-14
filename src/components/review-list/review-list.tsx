@@ -1,17 +1,26 @@
 import {Review} from '../review/review';
 import {useAppSelector} from '../../store';
-import { getMoreReviews, getSortedReviews} from '../../store/review/review-selector';
+import {
+  getAllReviews,
+  getMoreReviews,
+  getReviewsDataLoadingStatus,
+  getSortedReviews
+} from '../../store/review/review-selector';
 import {memo, useState} from 'react';
 import {NewComment} from '../new-comment/new-comment';
-import {getCurrentCameras} from '../../store/camera/camera-selector';
+import { getCurrentCameras} from '../../store/camera/camera-selector';
 import {CameraType} from '../../types/camera-type';
 import {deleteScrollLock, getScrollLock} from '../../utils';
+import {Loading} from '../loading/loading';
 
 export function ReviewList():JSX.Element {
   const reviewCounter = useAppSelector(getMoreReviews);
   const [isModal, setModal] = useState(false);
   const currentCamera = useAppSelector(getCurrentCameras) as CameraType;
-  const sortedReviews = useAppSelector(getSortedReviews).slice(0, 30);
+  const allReviews = useAppSelector(getAllReviews);
+  const sortedReviews = useAppSelector(getSortedReviews).slice(0, allReviews.length);
+  const isLoading = useAppSelector(getReviewsDataLoadingStatus);
+
   return (
     <>
       <section className="review-block">
@@ -25,6 +34,8 @@ export function ReviewList():JSX.Element {
             >Оставить свой отзыв
             </button>
           </div>
+          <Loading isLoading={isLoading} />
+
           <ul className="review-block__list">
             {sortedReviews
               .slice(0, reviewCounter)

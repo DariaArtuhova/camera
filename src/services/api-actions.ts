@@ -1,7 +1,6 @@
 import {ApiRoute} from '../const';
 import {CamerasType, CameraType, PromoType} from '../types/camera-type';
-import {loadCameras, loadCurrentCamera, loadPromo, loadSimilarCameras, setError} from '../store/camera/camera-action';
-import {loadReviews} from '../store/review/review-action';
+import { loadPromo, loadSimilarCameras, setError} from '../store/camera/camera-action';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import {AppDispatch, Store} from '../types/store';
@@ -18,44 +17,44 @@ export const clearErrorAction = createAsyncThunk(
   },
 );
 
-export const fetchCamerasAction = createAsyncThunk<void, undefined, {
+export const fetchCamerasAction = createAsyncThunk<CamerasType, undefined, {
   dispatch: AppDispatch;
   state: Store;
   extra: AxiosInstance;
 }> (
-  'data/loadCameras',
-  async (_arg, {dispatch, extra: api}) => {
+  'fetchCamerasAction',
+  async (_arg, { extra: api}) => {
 
     const {data} = await api.get<CamerasType>(ApiRoute.Cameras);
 
-    dispatch(loadCameras(data));
+    return data;
   }
 );
 
-export const fetchCurrentCameraAction = createAsyncThunk<void, number, {
+export const fetchCurrentCameraAction = createAsyncThunk<CameraType, number, {
   dispatch: AppDispatch;
   state: Store;
   extra: AxiosInstance;
 }> (
   'data/loadCamera',
-  async (cameraId, {dispatch, extra: api}) => {
+  async (cameraId, { extra: api}) => {
 
     const {data} = await api.get<CameraType>(`${ApiRoute.Cameras}/${cameraId}`);
 
-    dispatch(loadCurrentCamera(data));
+    return data;
   }
 );
 
 
-export const fetchReviewsAction = createAsyncThunk<void, string, {
+export const fetchReviewsAction = createAsyncThunk<ReviewType[], string, {
   dispatch: AppDispatch;
   state: Store;
   extra: AxiosInstance;
 }>(
   'data/fetchComments',
-  async (id, {dispatch, extra: api}) => {
+  async (id, { extra: api}) => {
     const response = await api.get<ReviewType[]>(`${ApiRoute.Cameras}/${id}${ApiRoute.Reviews}`);
-    dispatch(loadReviews(response.data));
+    return response.data;
   },
 );
 

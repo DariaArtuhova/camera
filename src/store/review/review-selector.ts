@@ -11,3 +11,5 @@ export const getSortedReviews = createSelector(
   getCurrentOfferReviews,
   (reviews) => sortReviews(reviews)
 );
+export const getReviewsDataLoadingStatus = (state: Store): boolean => state.review.isLoading;
+

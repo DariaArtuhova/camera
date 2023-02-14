@@ -13,7 +13,8 @@ describe('Reducer: cameraReducer', ()=> {
     state = {
       review: [],
       currentReview: null,
-      reviewCounter: REVIEW_STEP
+      reviewCounter: REVIEW_STEP,
+      isLoading: false
     };
   });
 

@@ -4,26 +4,32 @@ import {Provider} from 'react-redux';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {AppRoute} from '../../const';
 import App from './app';
-import {ReviewType} from '../../types/review-type';
-import {makeCamera, makeCameras, makeReview} from '../../mocks';
+import {makeCamera, makeReview} from '../../mocks';
+import thunk from 'redux-thunk';
+import HistoryRouter from '../history-router/history-router';
+const middlewares = [thunk];
 
-const mockStore = configureMockStore();
+const mockStore = configureMockStore(middlewares);
 
-const fakeReview = {...makeCamera(), id: 13};
-const fakeReviews = [...makeCameras(), fakeReview];
-const similarComments = [{...makeCamera(), id: 14}, {...makeCamera(), id: 15}, {...makeCamera(), id: 16}];
-const reviews: ReviewType[] = [{...makeReview(10), id: '13'}, {...makeReview(10), id: '13'}];
+const cameras = Array.from({ length: 10 }, () => makeCamera());
+const promo = makeCamera();
+const currentCamera = {...makeCamera(), id: 1};
+const reviews = Array.from({ length: 10 }, () => makeReview(1));
+const similar = Array.from({ length: 10 }, () => makeCamera());
 
 const store = mockStore({
-  CAMERAS: {cameras: fakeReviews, currentReviews: fakeReview, currentNearSimilar: similarComments},
-  REVIEWS: {currentComments: reviews},
+  camera: {cameras: cameras, currentCamera: currentCamera, similar: similar},
+  promo: {promo: promo},
+  review: {review: reviews},
 });
 
 const history = createMemoryHistory();
 
 const fakeApp = (
-  <Provider store={store}>
-    <App />
+  <Provider store={store} >
+    <HistoryRouter history={history}>
+      <App />
+    </HistoryRouter>
   </Provider>
 );
 
@@ -33,7 +39,7 @@ describe('Application Routing', () => {
 
     render(fakeApp);
 
-    expect(screen.getByText(/Каталог/i)).toBeInTheDocument();
+    expect(screen.getByText(`${cameras[0].name}`)).toBeInTheDocument();
   });
 
 
@@ -42,15 +48,17 @@ describe('Application Routing', () => {
 
     render(fakeApp);
 
+
     expect(screen.getByText(/Характеристики/i)).toBeInTheDocument();
     expect(screen.getByText(/Описание/i)).toBeInTheDocument();
 
   });
 
   it('should render "NotFoundPage" when user navigate to non-existent route', () => {
-    history.push(AppRoute.Error);
+    history.push('/unknown-route');
 
     render(fakeApp);
+
 
     expect(screen.getByText(/Page not found/i)).toBeInTheDocument();
     expect(screen.getByText(/Go to main page/i)).toBeInTheDocument();

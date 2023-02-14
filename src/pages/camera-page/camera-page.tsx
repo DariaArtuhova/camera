@@ -7,7 +7,7 @@ import {Helmet} from 'react-helmet';
 import {Header} from '../../components/header/header';
 import {Footer} from '../../components/footer/footer';
 import { useAppDispatch, useAppSelector} from '../../store';
-import {getCurrentCameras} from '../../store/camera/camera-selector';
+import {getCamerasDataLoadingStatus, getCurrentCameras} from '../../store/camera/camera-selector';
 import {fetchCurrentCameraAction, fetchReviewsAction, fetchSimilarCameras} from '../../services/api-actions';
 import {Loading} from '../../components/loading/loading';
 import {SimilarList} from '../../components/similar-list/similar-list';
@@ -23,6 +23,7 @@ export function CameraPage() : JSX.Element {
   const dispatch = useAppDispatch();
   const [ active, setActive ] = useState(true);
   const [ activeDescription, setActiveDescription ] = useState(false);
+  const isLoading = useAppSelector(getCamerasDataLoadingStatus);
 
   useEffect(() => {
     dispatch(fetchCurrentCameraAction(param));
@@ -151,7 +152,7 @@ export function CameraPage() : JSX.Element {
             </section>
           </div>
           <div className="page-content__section">
-            <SimilarList /> :
+            <SimilarList />
           </div>
           <div className="page-content__section">
             <ReviewList/>
@@ -163,7 +164,7 @@ export function CameraPage() : JSX.Element {
     );
   } else {
     return (
-      <Loading />
+      <Loading isLoading={isLoading}/>
     );
   }
 }

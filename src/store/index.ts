@@ -1,4 +1,4 @@
-import {configureStore} from '@reduxjs/toolkit';
+import {configureStore} from '@reduxjs/toolkit/';
 import {AppDispatch, Store} from '../types/store';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {createAPI} from '../services/api';
@@ -10,7 +10,7 @@ export const api = createAPI();
 export const store = configureStore({
   reducer: {
     camera: cameraReducer,
-    review: reviewReducer
+    review: reviewReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

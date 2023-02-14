@@ -8,7 +8,7 @@ export type ReviewType = {
   rating: number;
   createAt: string;
   cameraId: number;
-}
+};
 
 export type ReviewPostType = {
   'cameraId': number;
@@ -17,7 +17,7 @@ export type ReviewPostType = {
   'disadvantage': string;
   'review': string;
   'rating': number;
-}
+};
 
 export const Ratings: { value: number; title: string }[] = [
   {

@@ -1,6 +1,6 @@
 import {ReviewType} from './types/review-type';
 
-const sortDateDecrement = (a: ReviewType, b: ReviewType): number => {
+export const sortDateDecrement = (a: ReviewType, b: ReviewType): number => {
   const reviewDate1 = +new Date(a.createAt);
   const reviewDate2 = +new Date(b.createAt);
 

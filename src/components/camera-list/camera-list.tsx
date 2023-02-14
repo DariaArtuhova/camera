@@ -8,6 +8,7 @@ import {pages} from '../../const';
 export function CameraList() : JSX.Element {
   const camerasList = useAppSelector(getAllQuests);
 
+
   const {
     firstContentIndex,
     lastContentIndex,

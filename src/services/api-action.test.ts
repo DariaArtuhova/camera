@@ -5,8 +5,9 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import {ApiRoute} from '../const';
 import {Store} from '../types/store';
 import {createAPI} from './api';
-import { makeCameras} from '../mocks';
-import {fetchCamerasAction} from './api-actions';
+import {makeCamera, makeReviews} from '../mocks';
+import {fetchCamerasAction, fetchReviewsAction} from './api-actions';
+import {CamerasType} from '../types/camera-type';
 
 
 describe('Async actions', () => {
@@ -21,7 +22,7 @@ describe('Async actions', () => {
     >(middlewares);
 
   it('should dispatch Load_Cameras when GET /cameras', async () => {
-    const mockCameras = makeCameras();
+    const mockCameras: CamerasType = Array.from({ length: 4 }, makeCamera);
     mockAPI
       .onGet(ApiRoute.Cameras)
       .reply(200, mockCameras);
@@ -34,7 +35,25 @@ describe('Async actions', () => {
 
     expect(actions).toEqual([
       fetchCamerasAction.pending.type,
-      fetchCamerasAction.fulfilled.type
+      fetchCamerasAction.fulfilled.type,
+    ]);
+  });
+
+  it('should dispatch Load_Cameras when GET /reviews', async () => {
+    const mockReviews = makeReviews();
+    mockAPI
+      .onGet(`${ApiRoute.Cameras}/12${ApiRoute.Reviews}`)
+      .reply(200, mockReviews);
+
+    const store = mockStore();
+
+    await store.dispatch(fetchReviewsAction('12'));
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      fetchReviewsAction.pending.type,
+      fetchReviewsAction.fulfilled.type,
     ]);
   });
 });

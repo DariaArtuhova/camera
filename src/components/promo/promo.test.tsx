@@ -1,31 +1,27 @@
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {makeCamera} from '../../mocks';
 import {Provider} from 'react-redux';
-import {MainPage} from './main-page';
 import {render, screen} from '@testing-library/react';
-import thunk from 'redux-thunk';
 import { MemoryRouter } from 'react-router-dom';
+import {Promo} from './promo';
 
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
-const cameras = Array.from({ length: 10 }, () => makeCamera());
+const mockStore = configureMockStore();
 const promo = makeCamera();
 
 const store = mockStore({
-  camera: {cameras: cameras},
-  promo: {promo: promo}
+  camera: {promo},
 });
 
-describe('Component: MainPage', () => {
+describe('Component: Promo', () => {
   it('should render correctly', () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
-          <MainPage />
+          <Promo />
         </Provider>
       </MemoryRouter>
     );
 
-    expect(screen.getByText(`${cameras[0].name}`)).toBeInTheDocument();
+    expect(screen.getByText(`${promo.name}`)).toBeInTheDocument();
   });
 });
