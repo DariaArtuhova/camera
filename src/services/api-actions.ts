@@ -1,21 +1,10 @@
 import {ApiRoute} from '../const';
 import {CamerasType, CameraType, PromoType} from '../types/camera-type';
-import { loadPromo, loadSimilarCameras, setError} from '../store/camera/camera-action';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import {AppDispatch, Store} from '../types/store';
-import {store} from '../store';
 import {ReviewPostType, ReviewType} from '../types/review-type';
 
-export const clearErrorAction = createAsyncThunk(
-  'offer/clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      2000,
-    );
-  },
-);
 
 export const fetchCamerasAction = createAsyncThunk<CamerasType, undefined, {
   dispatch: AppDispatch;
@@ -58,29 +47,29 @@ export const fetchReviewsAction = createAsyncThunk<ReviewType[], string, {
   },
 );
 
-export const fetchPromoAction = createAsyncThunk<void, undefined, {
+export const fetchPromoAction = createAsyncThunk<PromoType, undefined, {
   dispatch: AppDispatch;
   state: Store;
   extra: AxiosInstance;
 }> (
   'data/loadPromo',
-  async (_arg, {dispatch, extra: api}) => {
+  async (_arg, { extra: api}) => {
 
     const {data} = await api.get<PromoType>(ApiRoute.Promo);
 
-    dispatch(loadPromo(data));
+    return data;
   }
 );
 
-export const fetchSimilarCameras = createAsyncThunk<void, number, {
+export const fetchSimilarCameras = createAsyncThunk<CamerasType, number, {
   dispatch: AppDispatch;
   state: Store;
   extra: AxiosInstance;
 }>(
   'data/fetchSimilarCameras',
-  async (id, {dispatch, extra: api}) => {
+  async (id, { extra: api}) => {
     const response = await api.get<CamerasType>(`${ApiRoute.Cameras}/${id}${ApiRoute.Similar}`);
-    dispatch(loadSimilarCameras(response.data));
+    return response.data;
   },
 );
 
@@ -93,6 +82,7 @@ export const sendNewReview = createAsyncThunk<void, ReviewPostType, {
   async ({userName, advantage, disadvantage, cameraId, review, rating}, {dispatch, extra: api}) => {
 
     await api.post<ReviewType>(`${ApiRoute.Reviews}`, {userName, advantage, disadvantage, cameraId, review, rating});
+
     dispatch(fetchReviewsAction(cameraId.toString()));
   }
 );

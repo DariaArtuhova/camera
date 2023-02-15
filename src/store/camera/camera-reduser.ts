@@ -1,7 +1,7 @@
 import { CamerasType, CameraType, PromoType} from '../../types/camera-type';
 import {createReducer} from '@reduxjs/toolkit';
-import { loadPromo, loadSimilarCameras, setError} from './camera-action';
-import {fetchCamerasAction, fetchCurrentCameraAction} from '../../services/api-actions';
+import { loadSimilarCameras, setError} from './camera-action';
+import {fetchCamerasAction, fetchCurrentCameraAction, fetchPromoAction} from '../../services/api-actions';
 
 export type InitialState = {
   cameras: CamerasType;
@@ -36,7 +36,7 @@ export const cameraReducer = createReducer(initialState, (builder) => {
       state.cameras = action.payload;
       state.isLoading = false;
     })
-    .addCase(loadPromo, (state, action) => {
+    .addCase(fetchPromoAction.fulfilled, (state, action) => {
       state.promo = action.payload;
     })
     .addCase(setError, (state, action) => {

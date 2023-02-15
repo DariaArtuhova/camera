@@ -6,7 +6,7 @@ import {Sort} from './sort';
 const mockStore = configureMockStore();
 const store = mockStore();
 
-describe('Component: Reviews', () => {
+describe('Component: Sort', () => {
   it('should render correctly', () => {
     render(
       <Provider store={store}>

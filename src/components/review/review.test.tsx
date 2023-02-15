@@ -12,7 +12,7 @@ const store = mockStore({
   review: {currentReview},
 });
 
-describe('Component: CameraPage', () => {
+describe('Component: Review', () => {
   it('should render correctly', () => {
     render(
       <MemoryRouter>

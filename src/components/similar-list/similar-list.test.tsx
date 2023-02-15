@@ -13,7 +13,7 @@ const store = mockStore({
   camera: {similar: cameras },
 });
 
-describe('Component: Reviews', () => {
+describe('Component: SimilarList', () => {
   it('should render correctly', () => {
     render(
       <BrowserRouter>

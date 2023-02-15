@@ -90,12 +90,15 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
                                 <input
                                   className="visually-hidden"
                                   type="radio"
-                                  name="rate"
                                   id={id}
                                   value={value}
-                                  onChange={(evt) => setReview({...review, rating: +evt.target.value})}
                                   checked={review.rating === value}
-                                  required
+                                  {...register('rate',
+                                    {
+                                      required: true
+                                    })}
+                                  onChange={(evt) => setReview({...review, rating: +evt.target.value})}
+                                  aria-invalid={errors.rate ? 'true' : 'false'}
                                 />
                                 <label
                                   className="rate__label"
@@ -113,7 +116,10 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
                         <span className="rate__all-stars">5</span>
                       </div>
                     </div>
-                    <p className="rate__message">Нужно оценить товар</p>
+                    {errors.rate?.type === 'required' &&
+                    <><br/>
+                      <p className="rate__message" style={{opacity: 1}}>Нужно оценить товар</p>
+                    </>}
                   </fieldset>
                   <div className="custom-input form-review__item">
                     <label>

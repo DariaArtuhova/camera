@@ -5,8 +5,14 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import {ApiRoute} from '../const';
 import {Store} from '../types/store';
 import {createAPI} from './api';
-import {makeCamera, makeReviews} from '../mocks';
-import {fetchCamerasAction, fetchReviewsAction} from './api-actions';
+import {makeCamera, makeCameras, makeReviews} from '../mocks';
+import {
+  fetchCamerasAction,
+  fetchCurrentCameraAction,
+  fetchPromoAction,
+  fetchReviewsAction,
+  fetchSimilarCameras
+} from './api-actions';
 import {CamerasType} from '../types/camera-type';
 
 
@@ -56,4 +62,59 @@ describe('Async actions', () => {
       fetchReviewsAction.fulfilled.type,
     ]);
   });
+
+  it('should dispatch Load_Cameras when GET /current camera', async () => {
+    const mockCurrentCamera = makeCamera();
+    mockAPI
+      .onGet(`${ApiRoute.Cameras}/12`)
+      .reply(200, mockCurrentCamera);
+
+    const store = mockStore();
+
+    await store.dispatch(fetchCurrentCameraAction(12));
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      fetchCurrentCameraAction.pending.type,
+      fetchCurrentCameraAction.fulfilled.type,
+    ]);
+  });
+
+  it('should dispatch Load_Cameras when GET /promo', async () => {
+    const mockPromo = makeCamera();
+    mockAPI
+      .onGet(ApiRoute.Promo)
+      .reply(200, mockPromo);
+
+    const store = mockStore();
+
+    await store.dispatch(fetchPromoAction());
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      fetchPromoAction.pending.type,
+      fetchPromoAction.fulfilled.type,
+    ]);
+  });
+
+  it('should dispatch Load_Cameras when GET /similar', async () => {
+    const mockSimilar = makeCameras();
+    mockAPI
+      .onGet(`${ApiRoute.Cameras}/12${ApiRoute.Similar}`)
+      .reply(200, mockSimilar);
+
+    const store = mockStore();
+
+    await store.dispatch(fetchSimilarCameras(12));
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      fetchSimilarCameras.pending.type,
+      fetchSimilarCameras.fulfilled.type,
+    ]);
+  });
+
 });
