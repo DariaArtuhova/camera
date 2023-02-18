@@ -27,7 +27,7 @@ export function MainPage(): JSX.Element {
         <Header/>
         {
           !camerasList ?
-            'jjjjj' :
+            <h2>Извините, произошла ошибка, попробуйте перезагрузить страницу или зайти позже</h2> :
             <main>
               <Promo/>
               <div className="page-content">

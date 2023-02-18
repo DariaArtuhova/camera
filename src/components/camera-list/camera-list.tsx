@@ -2,7 +2,7 @@ import {Camera} from '../camera/camera';
 import usePagination from '../../hooks/usePagination';
 import {useAppSelector} from '../../store';
 import {getAllQuests} from '../../store/camera/camera-selector';
-import {pages} from '../../const';
+import {CONTENT_PER_PAGE, pages} from '../../const';
 
 
 export function CameraList() : JSX.Element {
@@ -18,7 +18,7 @@ export function CameraList() : JSX.Element {
     setPage,
     totalPages,
   } = usePagination({
-    contentPerPage: 9,
+    contentPerPage: CONTENT_PER_PAGE,
     count: camerasList.length,
   });
 
@@ -34,33 +34,33 @@ export function CameraList() : JSX.Element {
       <div className="pagination">
         <ul className="pagination__list">
           <li className="pagination__item">
-            <a className="pagination__link pagination__link--text"
+            <button className="pagination__link pagination__link--text"
               onClick={prevPage}
               style={page === 1 ? {display:'none'} : {}}
             >Назад
-            </a>
+            </button>
           </li>
           {
             pages
               .slice(0, totalPages)
               .map((items)=> (
                 <li className="pagination__item" key={items}>
-                  <a className={`pagination__link pagination__link${
+                  <button className={`pagination__link pagination__link${
                     page === items ? '--active' : ''
                   }`}
                   onClick={() => setPage(items)}
                   >{items}
-                  </a>
+                  </button>
                 </li>
               ))
           }
 
           <li className="pagination__item">
-            <a className="pagination__link pagination__link--text"
+            <button className="pagination__link pagination__link--text"
               onClick={nextPage}
               style={page === totalPages ? {display:'none'} : {}}
             >Далее
-            </a>
+            </button>
           </li>
         </ul>
       </div>

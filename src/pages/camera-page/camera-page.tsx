@@ -1,5 +1,4 @@
 import {ReviewList} from '../../components/review-list/review-list';
-import {CameraType} from '../../types/camera-type';
 import {Link, useParams} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {useEffect, useState} from 'react';
@@ -13,8 +12,7 @@ import {Loading} from '../../components/loading/loading';
 import {SimilarList} from '../../components/similar-list/similar-list';
 import {getAllReviews} from '../../store/review/review-selector';
 import {ShowMoreButton} from '../../components/show-more-button/show-more-button';
-import Rating from '@mui/material/Rating';
-import {Icon} from '../../components/icon/icon';
+import {Rating} from '../../components/rating/rating';
 
 
 export function CameraPage() : JSX.Element {
@@ -30,13 +28,17 @@ export function CameraPage() : JSX.Element {
     dispatch(fetchReviewsAction(param.toString()));
     dispatch(fetchSimilarCameras(param));
   }, [dispatch, param]);
-  const currentCamera = useAppSelector(getCurrentCameras) as CameraType;
+  const currentCamera = useAppSelector(getCurrentCameras);
 
   const allReview = useAppSelector(getAllReviews);
   const reviewCounter = useAppSelector((state) => state.review.reviewCounter);
   const isButtonActive = allReview.length > reviewCounter;
 
-  if (currentCamera) {
+  if (!currentCamera) {
+    return (
+      <Loading isLoading={isLoading}/>
+    );
+  } else {
     return (
       <>
         <Helmet>
@@ -48,11 +50,11 @@ export function CameraPage() : JSX.Element {
             <div className="container">
               <ul className="breadcrumbs__list">
                 <li className="breadcrumbs__item">
-                  <a className="breadcrumbs__link">Главная
+                  <Link to={AppRoute.Root} className="breadcrumbs__link">Главная
                     <svg width="5" height="8" aria-hidden="true">
                       <use xlinkHref="#icon-arrow-mini"/>
                     </svg>
-                  </a>
+                  </Link>
                 </li>
                 <li className="breadcrumbs__item">
                   <Link to={AppRoute.Root} className="breadcrumbs__link">Каталог
@@ -84,12 +86,7 @@ export function CameraPage() : JSX.Element {
                 <div className="product__content">
                   <h1 className="title title--h3">{currentCamera.name}</h1>
                   <div className="rate product__rate">
-                    <Rating
-                      value={currentCamera.rating}
-                      icon={<Icon style={{color:'#ED9E41'}}/>}
-                      emptyIcon={<Icon style={{color:'#EAEAF8'}}/>}
-                      readOnly
-                    />
+                    <Rating rating={currentCamera.rating}/>
                     <p className="visually-hidden">Рейтинг: {currentCamera.rating}</p>
                     <p className="rate__count">
                       <span className="visually-hidden">Всего оценок:</span>{currentCamera.reviewCount}
@@ -106,22 +103,24 @@ export function CameraPage() : JSX.Element {
                   <div className="tabs product__tabs">
                     <div className="tabs__controls product__tabs-controls">
 
-                      <button className={`tabs__control ${active ? 'is-active' : ''}`} type="button"
-                        onClick={() => {
+                      <a className={`tabs__control ${active ? 'is-active' : ''}`} type="button"
+                        href={'#characteristics'}
+                        onClick={(evt) => {
                           setActive(!active);
-                          setActiveDescription(activeDescription === false);
+                          setActiveDescription(!activeDescription);
                         }}
                         tabIndex={0}
                       >Характеристики
-                      </button>
-                      <button className={`tabs__control ${activeDescription ? 'is-active' : ''}`} type="button"
-                        onClick={() => {
+                      </a>
+                      <a className={`tabs__control ${activeDescription ? 'is-active' : ''}`} type="button"
+                        href={'#description'}
+                        onClick={(evt) => {
                           setActiveDescription(!activeDescription);
-                          setActive(active === false);
+                          setActive(!active);
                         }}
                         tabIndex={1}
                       >Описание
-                      </button>
+                      </a>
                     </div>
                     <div className="tabs__content">
                       <div className={`tabs__element ${active ? 'is-active' : ''}`}>
@@ -161,10 +160,6 @@ export function CameraPage() : JSX.Element {
         </div>
         <Footer/>
       </>
-    );
-  } else {
-    return (
-      <Loading isLoading={isLoading}/>
     );
   }
 }

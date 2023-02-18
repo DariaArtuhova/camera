@@ -26,10 +26,11 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
   useEffect(() => {
     document.addEventListener('keydown', onKeydown);
     return () => document.removeEventListener('keydown', onKeydown);
-  });
+  }, []);
   type NewReview = Pick<ReviewType, 'userName' | 'advantage' | 'disadvantage' | 'rating' | 'cameraId' | 'review'>;
 
   const [isModal, setModal] = useState(false);
+  const [isSend, setSend] = useState(false);
 
   const [review, setReview] = useState<NewReview>({
     userName: '',
@@ -43,6 +44,7 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
   const dispatch = useAppDispatch();
 
   const onSubmit = async () => {
+    setSend(true);
     await dispatch(sendNewReview({
       review: review.review,
       cameraId: cameraId,
@@ -66,9 +68,7 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
           <div className="modal__content">
             <p className="title title--h4">Оставить отзыв</p>
             <div className="form-review">
-              <form method="post"
-                // eslint академии ошибочно выдает предупреждение()
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              <form method="post" action="https://camera-shop.accelerator.pages.academy/reviews"
                 onSubmit={
                   handleSubmit(onSubmit)
                 }
@@ -218,7 +218,7 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
                     <p className="custom-input__error" style={{opacity: 1}}>Длина должна быть от 5 символов</p>}
                   </div>
                 </div>
-                <button className="btn btn--purple form-review__btn" type="submit">Отправить отзыв</button>
+                <button className="btn btn--purple form-review__btn" type="submit" disabled={isSend}>{isSend ? 'Отправляю...' : 'Отправить отзыв'}</button>
               </form>
             </div>
             <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={onClose}>

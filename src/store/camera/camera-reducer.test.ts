@@ -1,6 +1,6 @@
 import {CamerasType} from '../../types/camera-type';
 import {makeCamera, makeCameras} from '../../mocks';
-import {cameraReducer, InitialState} from './camera-reduser';
+import {cameraReducer, InitialState} from './camera-reducer';
 import {
   fetchCamerasAction,
   fetchCurrentCameraAction,

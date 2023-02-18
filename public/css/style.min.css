@@ -1990,7 +1990,13 @@ input:matches([type=email],[type=number],[type=password],[type=search],[type=tel
   border-radius: 50px;
   -webkit-transition: background-color .3s ease;
   -o-transition: background-color .3s ease;
-  transition: background-color .3s ease
+  transition: background-color .3s ease;
+  outline: none;
+  border: none;
+}
+
+.pagination__link:hover {
+  cursor: pointer;
 }
 
 .pagination__link--active {
@@ -2003,7 +2009,9 @@ input:matches([type=email],[type=number],[type=password],[type=search],[type=tel
   min-width: 83px;
   color: #7575e2;
   background-color: #f4f4fc;
-  border-radius: 20px
+  border-radius: 20px;
+  outline: none;
+  border: none;
 }
 
 .pagination__link:disabled {

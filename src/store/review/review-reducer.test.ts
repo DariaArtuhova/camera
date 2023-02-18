@@ -1,5 +1,5 @@
 import { makeReview, makeReviews} from '../../mocks';
-import {InitialState, reviewReducer} from './review-reduser';
+import {InitialState, reviewReducer} from './review-reducer';
 import {REVIEW_STEP} from '../../const';
 import {ReviewType} from '../../types/review-type';
 import {fetchCurrentCameraAction, fetchReviewsAction} from '../../services/api-actions';

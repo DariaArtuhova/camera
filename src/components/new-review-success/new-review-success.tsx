@@ -19,7 +19,7 @@ export function NewReviewSuccess({isVisible, onClose}:newCommentProps) : JSX.Ele
   useEffect(() => {
     document.addEventListener('keydown', onKeydown);
     return () => document.removeEventListener('keydown', onKeydown);
-  });
+  }, []);
   return (
     <div className={`modal ${
       isVisible ? 'is-active' : ''
@@ -33,8 +33,8 @@ export function NewReviewSuccess({isVisible, onClose}:newCommentProps) : JSX.Ele
             <use xlinkHref="#icon-review-success"/>
           </svg>
           <div className="modal__buttons">
-            <a className="btn btn--purple modal__btn modal__btn--fit-width" onClick={onClose}>Вернуться к покупкам
-            </a>
+            <button className="btn btn--purple modal__btn modal__btn--fit-width" onClick={onClose}>Вернуться к покупкам
+            </button>
           </div>
           <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={onClose}>
             <svg width="10" height="10" aria-hidden="true">

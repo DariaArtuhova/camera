@@ -1,8 +1,7 @@
 import {ReviewType} from '../../types/review-type';
 import { format } from 'date-fns';
 import ru from 'date-fns/locale/ru';
-import Rating from '@mui/material/Rating';
-import {Icon} from '../icon/icon';
+import {Rating} from '../rating/rating';
 
 
 type ReviewProps = {
@@ -19,12 +18,7 @@ export function Review({reviews}:ReviewProps):JSX.Element {
         <time className="review-card__data" dateTime="2022-04-13" >{format(new Date(createAt), 'd MMMM ', {locale: ru})}</time>
       </div>
       <div className="rate review-card__rate">
-        <Rating
-          value={rating}
-          icon={<Icon style={{color:'#ED9E41'}}/>}
-          emptyIcon={<Icon style={{color:'#EAEAF8'}}/>}
-          readOnly
-        />
+        <Rating rating={rating}/>
         <p className="visually-hidden">Оценка: {rating}</p>
       </div>
       <ul className="review-card__list">
