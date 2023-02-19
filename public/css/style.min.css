@@ -1836,7 +1836,6 @@ input:matches([type=email],[type=number],[type=password],[type=search],[type=tel
 }
 
 .rate__group:not(:checked) > label:hover, .rate__group:not(:checked) > label:hover ~ label {
-  background: url(../img/svg/star-hover.svg) no-repeat top 0 left 0;
   background-size: 51px 48px
 }
 

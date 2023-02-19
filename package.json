@@ -25,7 +25,7 @@
   },
   "scripts": {
     "test": "react-scripts test --passWithNoTests",
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .tsx --ext .ts src/"

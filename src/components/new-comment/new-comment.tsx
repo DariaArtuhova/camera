@@ -14,7 +14,7 @@ type newCommentProps = {
 }
 
 export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX.Element {
-  const {register, handleSubmit, formState: {errors}} = useForm();
+  const {register, handleSubmit, formState: {errors}} = useForm<NewReview>();
   const onKeydown = ({ key }: KeyboardEvent) => {
     switch (key) {
       case 'Escape':
@@ -44,15 +44,16 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
   const dispatch = useAppDispatch();
 
   const onSubmit = async () => {
-    setSend(true);
-    await dispatch(sendNewReview({
+    const formData = {
       review: review.review,
       cameraId: cameraId,
       userName: review.userName,
       advantage: review.advantage,
       disadvantage: review.disadvantage,
       rating: review.rating,
-    }));
+    };
+    setSend(true);
+    await dispatch(sendNewReview(formData));
     onClose();
     getScrollLock();
     setModal(true);
@@ -68,10 +69,11 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
           <div className="modal__content">
             <p className="title title--h4">Оставить отзыв</p>
             <div className="form-review">
-              <form method="post" action="https://camera-shop.accelerator.pages.academy/reviews"
-                onSubmit={
-                  handleSubmit(onSubmit)
-                }
+              <form method="post"
+                onSubmit={(e) => {
+                  handleSubmit(onSubmit)(e);
+                }}
+
               >
                 <div className="form-review__rate">
                   <fieldset className="rate form-review__item">
@@ -93,12 +95,12 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
                                   id={id}
                                   value={value}
                                   checked={review.rating === value}
-                                  {...register('rate',
+                                  {...register('rating',
                                     {
                                       required: true
                                     })}
                                   onChange={(evt) => setReview({...review, rating: +evt.target.value})}
-                                  aria-invalid={errors.rate ? 'true' : 'false'}
+                                  aria-invalid={errors.rating ? 'true' : 'false'}
                                 />
                                 <label
                                   className="rate__label"
@@ -116,7 +118,7 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
                         <span className="rate__all-stars">5</span>
                       </div>
                     </div>
-                    {errors.rate?.type === 'required' &&
+                    {errors.rating?.type === 'required' &&
                     <><br/>
                       <p className="rate__message" style={{opacity: 1}}>Нужно оценить товар</p>
                     </>}
@@ -129,7 +131,7 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
                         </svg>
                       </span>
                       <input type="text" id="name" placeholder="Введите ваше имя"
-                        {...register('name',
+                        {...register('userName',
                           {
                             required: true,
                             pattern: /^[А-Яа-яЁёA-Za-z']/i,
@@ -137,14 +139,14 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
                             maxLength: {value: 15, message: 'error'},
                           })}
                         onChange={(evt) => setReview({...review, userName: evt.target.value})}
-                        aria-invalid={errors.name ? 'true' : 'false'}
+                        aria-invalid={errors.userName ? 'true' : 'false'}
                       />
                     </label>
-                    {errors.name?.type === 'required' &&
+                    {errors.userName?.type === 'required' &&
                     <><br/>
                       <p className="custom-input__error" style={{opacity: 1}}>Нужно указать имя</p>
                     </>}
-                    {errors.name && errors.name.message &&
+                    {errors.userName && errors.userName.message &&
                     <p className="custom-input__error" style={{opacity: 1}}>Длина должна быть от 2 до 15 символов</p>}
                   </div>
                   <div className="custom-input form-review__item">
@@ -155,16 +157,16 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
                         </svg>
                       </span>
                       <input type="text" placeholder="Основные преимущества товара"
-                        {...register('plus',
+                        {...register('advantage',
                           {
                             required: true,
                             pattern: /^[А-Яа-яЁёA-Za-z']/i,
                           })}
                         onChange={(evt) => setReview({...review, advantage: evt.target.value})}
-                        aria-invalid={errors.plus ? 'true' : 'false'}
+                        aria-invalid={errors.advantage ? 'true' : 'false'}
                       />
                     </label>
-                    {errors.plus?.type === 'required' &&
+                    {errors.advantage?.type === 'required' &&
                     <><br/>
                       <p className="custom-input__error" style={{opacity: 1}}>Нужно указать достоинства</p>
                     </>}
@@ -177,16 +179,16 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
                         </svg>
                       </span>
                       <input type="text" placeholder="Главные недостатки товара"
-                        {...register('minus',
+                        {...register('disadvantage',
                           {
                             required: true,
                             pattern: /^[А-Яа-яЁёA-Za-z']/i,
                           })}
                         onChange={(evt) => setReview({...review, disadvantage: evt.target.value})}
-                        aria-invalid={errors.minus ? 'true' : 'false'}
+                        aria-invalid={errors.disadvantage ? 'true' : 'false'}
                       />
                     </label>
-                    {errors.minus?.type === 'required' &&
+                    {errors.disadvantage?.type === 'required' &&
                     <><br/>
                       <p className="custom-input__error" style={{opacity: 1}}>Нужно указать недостатки</p>
                     </>}
@@ -200,21 +202,21 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
                       </span>
                       <textarea
                         placeholder="Поделитесь своим опытом покупки"
-                        {...register('comment',
+                        {...register('review',
                           {
                             required: true,
                             pattern: /^[А-Яа-яЁёA-Za-z']/i,
                             minLength: {value: 5, message: 'error'},
                           })}
                         onChange={(evt) => setReview({...review, review: evt.target.value})}
-                        aria-invalid={errors.comment ? 'true' : 'false'}
+                        aria-invalid={errors.review ? 'true' : 'false'}
                       />
                     </label>
-                    {errors.comment?.type === 'required' &&
+                    {errors.review?.type === 'required' &&
                     <><br/>
                       <div className="custom-textarea__error" style={{opacity: 1}}>Нужно добавить комментарий</div>
                     </>}
-                    {errors.comment && errors.comment.message &&
+                    {errors.review && errors.review.message &&
                     <p className="custom-input__error" style={{opacity: 1}}>Длина должна быть от 5 символов</p>}
                   </div>
                 </div>
