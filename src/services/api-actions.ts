@@ -1,10 +1,9 @@
 import {ApiRoute} from '../const';
 import {CamerasType, CameraType, PromoType} from '../types/camera-type';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios, { AxiosInstance } from 'axios';
+import { AxiosInstance } from 'axios';
 import {AppDispatch, Store} from '../types/store';
 import {ReviewPostType, ReviewType} from '../types/review-type';
-import {toast} from 'react-toastify';
 
 
 export const fetchCamerasAction = createAsyncThunk<CamerasType, undefined, {
@@ -81,16 +80,9 @@ export const sendNewReview = createAsyncThunk<void, ReviewPostType, {
 }>(
   'data/sendNewReview',
   async ({userName, advantage, disadvantage, cameraId, review, rating}, {dispatch, extra: api}) => {
-    try {
-      await api.post<ReviewType>(`${ApiRoute.Reviews}`, {userName, advantage, disadvantage, cameraId, review, rating});
 
-      dispatch(fetchReviewsAction(cameraId.toString()));
-    }
-    catch (err) {
-      if (axios.isAxiosError(err)) {
-        toast.warn('Не удалось отправить данные. Попробуйте позже');
-      }
-      throw err;
-    }
+    await api.post<ReviewType>(`${ApiRoute.Reviews}`, {userName, advantage, disadvantage, cameraId, review, rating});
+
+    dispatch(fetchReviewsAction(cameraId.toString()));
   }
 );

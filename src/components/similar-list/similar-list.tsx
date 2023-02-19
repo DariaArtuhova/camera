@@ -6,6 +6,7 @@ import {Loading} from '../loading/loading';
 
 export function SimilarList() : JSX.Element {
   const similarCameras = useAppSelector(getSimilarCameras);
+  const isLoading = useAppSelector(getCamerasDataLoadingStatus);
 
   const {
     firstContentIndex,
@@ -18,17 +19,16 @@ export function SimilarList() : JSX.Element {
     contentPerPage: 3,
     count: similarCameras.length,
   });
-  const isLoading = useAppSelector(getCamerasDataLoadingStatus);
 
   if (similarCameras.length === 0) {
     return (
-      <section className="product-similar" style={{display:'none'}}>
-      </section>
+      <div className="page-content__section" style={{display: 'none'}}>
+      </div>
     );
   } else {
     return (
       <>
-        <Loading isLoading={isLoading} />
+        <Loading isLoading={isLoading}/>
         <section className="product-similar">
           <div className="container">
             <h2 className="title title--h3">Похожие товары</h2>
