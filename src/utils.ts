@@ -1,4 +1,5 @@
 import {ReviewType} from './types/review-type';
+import {createBrowserHistory} from 'history';
 
 export const sortDateDecrement = (a: ReviewType, b: ReviewType): number => {
   const reviewDate1 = +new Date(a.createAt);
@@ -22,5 +23,8 @@ export function deleteScrollLock () {
   const body = document.getElementById('body') as HTMLElement;
   body.classList.remove('scroll-lock');
 }
+
+export const browserHistory = createBrowserHistory();
+
 
 export default sortReviews;

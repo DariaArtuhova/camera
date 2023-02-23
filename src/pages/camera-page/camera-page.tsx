@@ -13,7 +13,7 @@ import {SimilarList} from '../../components/similar-list/similar-list';
 import {getAllReviews} from '../../store/review/review-selector';
 import {ShowMoreButton} from '../../components/show-more-button/show-more-button';
 import {Rating} from '../../components/rating/rating';
-
+import {Error} from '../error/error';
 
 export function CameraPage() : JSX.Element {
   const {id} = useParams();
@@ -34,11 +34,16 @@ export function CameraPage() : JSX.Element {
   const reviewCounter = useAppSelector((state) => state.review.reviewCounter);
   const isButtonActive = allReview.length > reviewCounter;
 
-  if (!currentCamera) {
+  if (isLoading) {
     return (
       <Loading isLoading={isLoading}/>
     );
-  } else {
+  } else if (!currentCamera) {
+    return (
+      <Error />
+    );
+  } else
+  {
     return (
       <>
         <Helmet>

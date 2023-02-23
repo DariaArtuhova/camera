@@ -20,6 +20,13 @@ export function ReviewList():JSX.Element {
   const allReviews = useAppSelector(getAllReviews);
   const sortedReviews = useAppSelector(getSortedReviews).slice(0, allReviews.length);
   const isLoading = useAppSelector(getReviewsDataLoadingStatus);
+  const onTop = () => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  };
 
   return (
     <>
@@ -51,6 +58,11 @@ export function ReviewList():JSX.Element {
         }}
         cameraId={currentCamera.id}
       />
+      <button className="up-btn" onClick={onTop}>
+        <svg width="12" height="18" aria-hidden="true" >
+          <use xlinkHref="#icon-arrow2"/>
+        </svg>
+      </button>
     </>
   );
 }

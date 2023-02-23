@@ -31,7 +31,10 @@ export const cameraReducer = createReducer(initialState, (builder) => {
     .addCase(fetchCurrentCameraAction.fulfilled, (state, action) => {
       state.currentCamera = action.payload;
     })
-    .addCase(fetchCurrentCameraAction.pending, (state, action) => {
+    .addCase(fetchCurrentCameraAction.rejected, (state, action) => {
+      state.isLoading = false;
+    })
+    .addCase(fetchCurrentCameraAction.pending, (state) => {
       state.isLoading = false;
     })
     .addCase(fetchCamerasAction.pending, (state) => {
@@ -51,7 +54,7 @@ export const cameraReducer = createReducer(initialState, (builder) => {
       state.similar = action.payload;
       state.isLoading = false;
     })
-    .addCase(fetchSimilarCameras.pending, (state, action) => {
+    .addCase(fetchSimilarCameras.pending, (state) => {
       state.isLoading = true;
     });
 });
