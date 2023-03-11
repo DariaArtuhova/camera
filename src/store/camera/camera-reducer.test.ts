@@ -20,7 +20,8 @@ describe('Reducer: cameraReducer', ()=> {
       promo: null,
       error: null,
       similar: [],
-      isLoading: false
+      isLoading: false,
+      countCameras: 0
     };
   });
 

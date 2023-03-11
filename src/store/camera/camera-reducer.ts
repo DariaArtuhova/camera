@@ -1,8 +1,12 @@
-import { CamerasType, CameraType, PromoType} from '../../types/camera-type';
+import {CamerasType, CameraType, PromoType} from '../../types/camera-type';
 import {createReducer} from '@reduxjs/toolkit';
-import {setError} from './camera-action';
 import {
-  fetchCamerasAction,
+  loadCameras,
+  setCountCameras,
+  setError
+} from './camera-action';
+import {
+  fetchCamerasAction, fetchCamerasWithParamsAction,
   fetchCurrentCameraAction,
   fetchPromoAction,
   fetchSimilarCameras
@@ -15,6 +19,8 @@ export type InitialState = {
   error: string | null;
   similar: CamerasType;
   isLoading: boolean;
+  countCameras: number;
+
 }
 export const initialState: InitialState = {
   cameras: [],
@@ -23,7 +29,7 @@ export const initialState: InitialState = {
   error: null,
   similar: [],
   isLoading: false,
-
+  countCameras: 0
 };
 
 export const cameraReducer = createReducer(initialState, (builder) => {
@@ -44,6 +50,9 @@ export const cameraReducer = createReducer(initialState, (builder) => {
       state.cameras = action.payload;
       state.isLoading = false;
     })
+    .addCase(loadCameras, (state, action) => {
+      state.cameras = action.payload;
+    })
     .addCase(fetchPromoAction.fulfilled, (state, action) => {
       state.promo = action.payload;
     })
@@ -56,5 +65,14 @@ export const cameraReducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchSimilarCameras.pending, (state) => {
       state.isLoading = true;
+    })
+    .addCase(fetchCamerasWithParamsAction.pending, (state) => {
+      state.isLoading = true;
+    })
+    .addCase(fetchCamerasWithParamsAction.fulfilled, (state) => {
+      state.isLoading = false;
+    })
+    .addCase(setCountCameras, (state, action) => {
+      state.countCameras = action.payload;
     });
 });

@@ -1,11 +1,11 @@
 import {ReviewList} from '../../components/review-list/review-list';
 import {Link, useParams} from 'react-router-dom';
-import {AppRoute} from '../../const';
-import {useEffect, useState} from 'react';
+import {AppRoute, CameraDetailsTypes, QueryParamsList} from '../../const';
+import {useEffect} from 'react';
 import {Helmet} from 'react-helmet';
 import {Header} from '../../components/header/header';
 import {Footer} from '../../components/footer/footer';
-import { useAppDispatch, useAppSelector} from '../../store';
+import {useAppDispatch, useAppSelector} from '../../store';
 import {getCamerasDataLoadingStatus, getCurrentCameras} from '../../store/camera/camera-selector';
 import {fetchCurrentCameraAction, fetchReviewsAction, fetchSimilarCameras} from '../../services/api-actions';
 import {Loading} from '../../components/loading/loading';
@@ -14,25 +14,44 @@ import {getAllReviews} from '../../store/review/review-selector';
 import {ShowMoreButton} from '../../components/show-more-button/show-more-button';
 import {Rating} from '../../components/rating/rating';
 import {Error} from '../error/error';
+import {useUpdateUrlWithParams} from '../../hooks/useUpdate';
+
 
 export function CameraPage() : JSX.Element {
   const {id} = useParams();
   const param = Number(id);
   const dispatch = useAppDispatch();
-  const [ active, setActive ] = useState(true);
-  const [ activeDescription, setActiveDescription ] = useState(false);
   const isLoading = useAppSelector(getCamerasDataLoadingStatus);
+  const currentCamera = useAppSelector(getCurrentCameras);
+  const {queryParams, updateUrlWithParams} = useUpdateUrlWithParams();
+  const allReview = useAppSelector(getAllReviews);
+  const reviewCounter = useAppSelector((state) => state.review.reviewCounter);
+  const isButtonActive = allReview.length > reviewCounter;
 
   useEffect(() => {
     dispatch(fetchCurrentCameraAction(param));
     dispatch(fetchReviewsAction(param.toString()));
     dispatch(fetchSimilarCameras(param));
   }, [dispatch, param]);
-  const currentCamera = useAppSelector(getCurrentCameras);
 
-  const allReview = useAppSelector(getAllReviews);
-  const reviewCounter = useAppSelector((state) => state.review.reviewCounter);
-  const isButtonActive = allReview.length > reviewCounter;
+
+  const handleCharacteristicClick = () => {
+    if(queryParams.has(QueryParamsList.Feature)) {
+      updateUrlWithParams(QueryParamsList.Feature, CameraDetailsTypes.Feature);
+    } else {
+      updateUrlWithParams(QueryParamsList.Feature, CameraDetailsTypes.Feature);
+      updateUrlWithParams(QueryParamsList.Feature, CameraDetailsTypes.Description);
+    }
+  };
+
+  const handleDescriptionClick = () => {
+    if(queryParams.has(QueryParamsList.Feature)) {
+      updateUrlWithParams(QueryParamsList.Feature, CameraDetailsTypes.Description);
+    } else {
+      updateUrlWithParams(QueryParamsList.Feature, CameraDetailsTypes.Description);
+      updateUrlWithParams(QueryParamsList.Feature, CameraDetailsTypes.Feature);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -108,27 +127,33 @@ export function CameraPage() : JSX.Element {
                   <div className="tabs product__tabs">
                     <div className="tabs__controls product__tabs-controls">
 
-                      <a className={`tabs__control ${active ? 'is-active' : ''}`} type="button"
-                        href={'#characteristics'}
+                      <a
+                        className={`tabs__control ${queryParams.get(QueryParamsList.Feature) === CameraDetailsTypes.Feature ? 'is-active' : ''}`}
+                        href=''
                         onClick={(evt) => {
-                          setActive(!active);
-                          setActiveDescription(!activeDescription);
+                          evt.preventDefault();
+                          handleCharacteristicClick();
                         }}
+
                         tabIndex={0}
                       >Характеристики
                       </a>
-                      <a className={`tabs__control ${activeDescription ? 'is-active' : ''}`} type="button"
-                        href={'#description'}
+                      <a
+                        className={`tabs__control ${queryParams.get(QueryParamsList.Feature) === CameraDetailsTypes.Description ? 'is-active' : ''}`}
+                        type="button"
+                        href=''
                         onClick={(evt) => {
-                          setActiveDescription(!activeDescription);
-                          setActive(!active);
+                          evt.preventDefault();
+                          handleDescriptionClick();
                         }}
                         tabIndex={1}
                       >Описание
                       </a>
                     </div>
                     <div className="tabs__content">
-                      <div className={`tabs__element ${active ? 'is-active' : ''}`}>
+                      <div
+                        className={`tabs__element ${queryParams.get(QueryParamsList.Feature) === CameraDetailsTypes.Feature ? 'is-active' : ''}`}
+                      >
                         <ul className="product__tabs-list">
                           <li className="item-list"><span className="item-list__title">Артикул:</span>
                             <p className="item-list__text"> {currentCamera.vendorCode}</p>
@@ -144,7 +169,9 @@ export function CameraPage() : JSX.Element {
                           </li>
                         </ul>
                       </div>
-                      <div className={`tabs__element ${activeDescription ? 'is-active' : ''}`}>
+                      <div
+                        className={`tabs__element ${queryParams.get(QueryParamsList.Feature) === CameraDetailsTypes.Description ? 'is-active' : ''}`}
+                      >
                         <div className="product__tabs-text">
                           <p>{currentCamera.description}</p>
                         </div>

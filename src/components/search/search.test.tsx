@@ -1,26 +1,25 @@
+import { render } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import {Search} from './search';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import { makeCameras} from '../../mocks';
+import {makeCameras} from '../../mocks';
 import {Provider} from 'react-redux';
-import {render} from '@testing-library/react';
-import {CameraList} from './camera-list';
-import { MemoryRouter } from 'react-router-dom';
 
 const mockStore = configureMockStore();
 const cameras = makeCameras();
-
 
 const store = mockStore({
   camera: {cameras: cameras},
 });
 
-describe('Component: CameraList', () => {
-  it('should render correctly', () => {
+describe('Search component', () => {
+  it('should Search render is success', () => {
     render(
-      <MemoryRouter>
+      <BrowserRouter>
         <Provider store={store}>
-          <CameraList cameras={cameras}/>
+          <Search />
         </Provider>
-      </MemoryRouter>
+      </BrowserRouter>
     );
 
     expect(`${cameras[0].name}`).toEqual(`${cameras[0].name}`);

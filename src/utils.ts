@@ -1,5 +1,6 @@
 import {ReviewType} from './types/review-type';
 import {createBrowserHistory} from 'history';
+import { CamerasType} from './types/camera-type';
 
 export const sortDateDecrement = (a: ReviewType, b: ReviewType): number => {
   const reviewDate1 = +new Date(a.createAt);
@@ -25,6 +26,37 @@ export function deleteScrollLock () {
 }
 
 export const browserHistory = createBrowserHistory();
+export const calcMinGuitarsPrice = (cameras: CamerasType): number => {
+  if(cameras.length <= 0) {
+    return 0;
+  }
+
+  let min = cameras[0].price;
+
+  cameras.forEach((camera) => {
+    if(min > camera.price) {
+      min = camera.price;
+    }
+  });
+
+  return min;
+};
+
+export const calcMaxGuitarsPrice = (cameras: CamerasType): number => {
+  if(cameras.length <= 0) {
+    return 0;
+  }
+
+  let max = cameras[0].price;
+
+  cameras.forEach((camera) => {
+    if(max < camera.price) {
+      max = camera.price;
+    }
+  });
+
+  return max;
+};
 
 
 export default sortReviews;

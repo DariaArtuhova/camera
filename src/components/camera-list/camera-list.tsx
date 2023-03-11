@@ -1,13 +1,19 @@
 import {Camera} from '../camera/camera';
 import usePagination from '../../hooks/usePagination';
-import {useAppSelector} from '../../store';
+import { useAppSelector} from '../../store';
 import {getAllQuests} from '../../store/camera/camera-selector';
 import {CONTENT_PER_PAGE, pages} from '../../const';
+import {useMemo} from 'react';
+import {CamerasType} from '../../types/camera-type';
+import {useUpdateUrlWithParams} from '../../hooks/useUpdate';
 
+type CamerasProps = {
+  cameras: CamerasType;
+}
 
-export function CameraList() : JSX.Element {
+export function CameraList({cameras}: CamerasProps) : JSX.Element {
   const camerasList = useAppSelector(getAllQuests);
-
+  const {deleteUrlParam, addUrlWithParams} = useUpdateUrlWithParams();
 
   const {
     firstContentIndex,
@@ -25,6 +31,8 @@ export function CameraList() : JSX.Element {
   return (
     <>
       <div className="cards catalog__cards">
+        {useMemo(() => cameras.map((camera) => <Camera key={camera.id} camera={camera}/>), [cameras])}
+
         {camerasList
           .slice(firstContentIndex, lastContentIndex)
           .map((camera) => (
@@ -35,7 +43,11 @@ export function CameraList() : JSX.Element {
         <ul className="pagination__list">
           <li className="pagination__item">
             <button className="pagination__link pagination__link--text"
-              onClick={prevPage}
+              onClick={()=> {
+                deleteUrlParam('page', String(page + 1));
+                addUrlWithParams('page', String(page - 1));
+                prevPage();
+              }}
               style={page === 1 ? {display:'none'} : {}}
             >Назад
             </button>
@@ -48,7 +60,13 @@ export function CameraList() : JSX.Element {
                   <button className={`pagination__link pagination__link${
                     page === items ? '--active' : ''
                   }`}
-                  onClick={() => setPage(items)}
+                  onClick={() => {
+                    setPage(items);
+                    deleteUrlParam('page', String(page - 1));
+                    deleteUrlParam('page', String(page + 1));
+                    deleteUrlParam('page', items.toString());
+                    addUrlWithParams('page', items.toString());
+                  }}
                   >{items}
                   </button>
                 </li>
@@ -57,7 +75,11 @@ export function CameraList() : JSX.Element {
 
           <li className="pagination__item">
             <button className="pagination__link pagination__link--text"
-              onClick={nextPage}
+              onClick={()=> {
+                deleteUrlParam('page', String(page - 1));
+                addUrlWithParams('page', String(page + 1));
+                nextPage();
+              }}
               style={page === totalPages ? {display:'none'} : {}}
             >Далее
             </button>

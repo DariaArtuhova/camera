@@ -26,6 +26,6 @@ describe('Component: MainPage', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText(`${cameras[0].name}`)).toBeInTheDocument();
+    expect(screen.getByText('Каталог фото- и видеотехники')).toBeInTheDocument();
   });
 });

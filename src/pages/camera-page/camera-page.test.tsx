@@ -11,9 +11,10 @@ const mockStore = configureMockStore(middlewares);
 const currentCamera = {...makeCamera(), id: 1};
 const reviews = Array.from({ length: 10 }, () => makeReview(1));
 const similar = Array.from({ length: 10 }, () => makeCamera());
+const cameras = Array.from({ length: 10 }, () => makeCamera());
 
 const store = mockStore({
-  camera: { currentCamera: currentCamera, similar: similar },
+  camera: { currentCamera: currentCamera, similar: similar, cameras: cameras },
   review: {review: reviews},
 });
 

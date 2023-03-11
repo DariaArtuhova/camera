@@ -1,8 +1,8 @@
-import {render, screen} from '@testing-library/react';
-import {BrowserRouter} from 'react-router-dom';
-import {Header} from './header';
-import {makeCameras} from '../../mocks';
+import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import {Filter} from './filter';
 import {configureMockStore} from '@jedmao/redux-mock-store';
+import {makeCameras} from '../../mocks';
 import {Provider} from 'react-redux';
 
 const mockStore = configureMockStore();
@@ -12,17 +12,16 @@ const store = mockStore({
   camera: {cameras: cameras},
 });
 
-describe('Component: Header', () => {
-  it('should render correctly', () => {
+describe('Filter component', () => {
+  it('should Filter render is success', () => {
     render(
       <BrowserRouter>
         <Provider store={store}>
-          <Header />
+          <Filter />
         </Provider>
       </BrowserRouter>
-
     );
 
-    expect(screen.getByText('Каталог')).toBeInTheDocument();
+    expect(screen.getByText('Фильтр')).toBeInTheDocument();
   });
 });

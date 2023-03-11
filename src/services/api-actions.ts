@@ -1,9 +1,10 @@
 import {ApiRoute} from '../const';
-import {CamerasType, CameraType, PromoType} from '../types/camera-type';
+import {CamerasType, CameraType, PromoType, SortParams} from '../types/camera-type';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import {AppDispatch, Store} from '../types/store';
 import {ReviewPostType, ReviewType} from '../types/review-type';
+import {loadCameras, setCountCameras} from '../store/camera/camera-action';
 
 
 export const fetchCamerasAction = createAsyncThunk<CamerasType, undefined, {
@@ -85,4 +86,30 @@ export const sendNewReview = createAsyncThunk<void, ReviewPostType, {
 
     dispatch(fetchReviewsAction(cameraId.toString()));
   }
+);
+
+export const fetchCamerasWithParamsAction = createAsyncThunk<void, SortParams, {
+  dispatch: AppDispatch;
+  state: Store;
+  extra: AxiosInstance;
+}>(
+  'cameras/fetchCamerasWithParamsAction',
+  async ({sort, order, priceStart, priceEnd, type, count, level, category}, {dispatch, extra: api}) => {
+
+    const { data } = await api.get<CameraType[]>(ApiRoute.Cameras,
+      {
+        params: {
+          '_sort': sort,
+          '_order': order,
+          'price_gte': priceStart,
+          'price_lte': priceEnd,
+          'type': type,
+          'level': level,
+          'category': category,
+          'stringCount': count,
+        }});
+
+    dispatch(setCountCameras(data.length));
+    dispatch(loadCameras(data));
+  },
 );

@@ -7,3 +7,4 @@ export const getPromo = (state: Store) => state.camera.promo;
 export const getSimilarCameras = (state: Store) => state.camera.similar;
 export const getCamerasDataLoadingStatus = (state: Store): boolean => state.camera.isLoading;
 
+
