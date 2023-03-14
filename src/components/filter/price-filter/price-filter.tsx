@@ -3,14 +3,14 @@ import {useAppSelector} from '../../../store';
 import {useUpdateUrlWithParams} from '../../../hooks/useUpdate';
 import {QueryParamsList} from '../../../const';
 import {getAllQuests} from '../../../store/camera/camera-selector';
-import {calcMaxGuitarsPrice, calcMinGuitarsPrice} from '../../../utils';
+import {calcMaxCamerasPrice, calcMinCamerasPrice} from '../../../utils';
 
 function PriceFilter(): JSX.Element {
   const cameras = useAppSelector(getAllQuests);
-  const originalGuitars = useAppSelector(getAllQuests);
+  const originalCameras = useAppSelector(getAllQuests);
 
-  const minPriceInGuitars = calcMinGuitarsPrice(cameras);
-  const maxPriceInGuitars = calcMaxGuitarsPrice(cameras);
+  const minPriceInCameras = calcMinCamerasPrice(cameras);
+  const maxPriceInCameras = calcMaxCamerasPrice(cameras);
   const { queryParams, updateUrlWithParams } = useUpdateUrlWithParams();
 
   const initialMinPrice =
@@ -36,17 +36,17 @@ function PriceFilter(): JSX.Element {
 
   const handleMinPriceFilterBlur = () => {
     if (cameras.length <= 0) {
-      const originalMinPrice = calcMinGuitarsPrice(originalGuitars);
+      const originalMinPrice = calcMinCamerasPrice(originalCameras);
       setMinPrice(originalMinPrice);
       updateUrlWithParams(QueryParamsList.PriceStart, String(originalMinPrice));
     } else if (minPrice) {
-      const currentMaxPrice = maxPrice || maxPriceInGuitars;
+      const currentMaxPrice = maxPrice || maxPriceInCameras;
 
-      if (minPrice < minPriceInGuitars || minPrice >= currentMaxPrice) {
-        setMinPrice(minPriceInGuitars);
+      if (minPrice < minPriceInCameras || minPrice >= currentMaxPrice) {
+        setMinPrice(minPriceInCameras);
         updateUrlWithParams(
           QueryParamsList.PriceStart,
-          String(minPriceInGuitars),
+          String(minPriceInCameras),
         );
       } else {
         updateUrlWithParams(QueryParamsList.PriceStart, String(minPrice));
@@ -55,7 +55,7 @@ function PriceFilter(): JSX.Element {
       if (!maxPrice) {
         updateUrlWithParams(
           QueryParamsList.PriceEnd,
-          String(maxPriceInGuitars),
+          String(maxPriceInCameras),
         );
       }
     }
@@ -71,15 +71,15 @@ function PriceFilter(): JSX.Element {
 
   const handleMaxPriceFilterBlur = () => {
     if (cameras.length <= 0) {
-      const originalMaxPrice = calcMaxGuitarsPrice(originalGuitars);
+      const originalMaxPrice = calcMaxCamerasPrice(originalCameras);
       setMaxPrice(originalMaxPrice);
       updateUrlWithParams(QueryParamsList.PriceEnd, String(originalMaxPrice));
     } else if (maxPrice) {
-      if (maxPrice <= minPrice || maxPrice >= maxPriceInGuitars) {
-        setMaxPrice(maxPriceInGuitars);
+      if (maxPrice < minPrice) {
+        setMaxPrice(maxPriceInCameras);
         updateUrlWithParams(
           QueryParamsList.PriceEnd,
-          String(maxPriceInGuitars),
+          String(maxPriceInCameras),
         );
       } else {
         updateUrlWithParams(QueryParamsList.PriceEnd, String(maxPrice));
@@ -88,7 +88,7 @@ function PriceFilter(): JSX.Element {
       if (!minPrice) {
         updateUrlWithParams(
           QueryParamsList.PriceStart,
-          String(minPriceInGuitars),
+          String(minPriceInCameras),
         );
       }
     }
@@ -103,7 +103,7 @@ function PriceFilter(): JSX.Element {
           <input
             id="priceMin"
             name="от"
-            placeholder={String(minPriceInGuitars)}
+            placeholder={String(minPriceInCameras)}
             value={minPrice}
             onChange={handleMinPriceFilterChange}
             onBlur={handleMinPriceFilterBlur}
@@ -114,7 +114,7 @@ function PriceFilter(): JSX.Element {
           <input
             id="priceMax"
             name="до"
-            placeholder={String(maxPriceInGuitars)}
+            placeholder={String(maxPriceInCameras)}
             value={maxPrice}
             onChange={handleMaxPriceFilterChange}
             onBlur={handleMaxPriceFilterBlur}

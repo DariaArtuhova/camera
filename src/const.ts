@@ -108,7 +108,7 @@ export const LimitedFilter = {
 } as const;
 
 export enum CameraType {
-  Digital = 'Фотокамера',
+  Digital = 'Цифровая',
   Film ='Плёночная',
   Snapshot = 'Моментальная',
   Collection = 'Коллекционная',
@@ -145,7 +145,7 @@ export const FILTER_CATEGORY_TYPES = [
   {
     id: 'Фотоаппарат',
     type: CameraCategory.PhotoCamera,
-    name: 'Цифровая',
+    name: 'Фотокамера',
     isChecked: false
   },
   {
@@ -158,9 +158,9 @@ export const FILTER_CATEGORY_TYPES = [
 
 export const FILTER_CAMERA_TYPES = [
   {
-    id: 'Фотокамера',
+    id: 'Цифровая',
     type: CameraType.Digital,
-    name: 'Фотокамера',
+    name: 'Цифровая',
     isChecked: false
   },
   {

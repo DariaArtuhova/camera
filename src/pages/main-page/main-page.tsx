@@ -6,7 +6,6 @@ import {Sort} from '../../components/sort/sort';
 import {useAppDispatch, useAppSelector} from '../../store';
 import {useEffect, useState} from 'react';
 import {
-  fetchCamerasAction,
   fetchCamerasWithParamsAction,
   fetchPromoAction
 } from '../../services/api-actions';
@@ -20,14 +19,13 @@ import {CamerasType, SortParams} from '../../types/camera-type';
 export function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(fetchCamerasAction());
-    dispatch(fetchPromoAction());
-  }, [dispatch]);
-
   const camerasList = useAppSelector(getAllQuests);
   const isLoading = useAppSelector(getCamerasDataLoadingStatus);
   const [showerCameras, ] = useState<CamerasType>([]);
+
+  useEffect(() => {
+    dispatch(fetchPromoAction());
+  }, [dispatch]);
 
   const {queryParams} = useUpdateUrlWithParams();
   useEffect(() => {
@@ -97,7 +95,11 @@ export function MainPage(): JSX.Element {
                     <div className="catalog__content">
                       <Sort/>
                       <Loading isLoading={isLoading} />
-                      <CameraList cameras={showerCameras}/>
+                      {
+                        showerCameras.length === 0 && camerasList.length === 0 ?
+                          <h2>Ничего не найдено</h2> :
+                          <CameraList cameras={showerCameras}/>
+                      }
                     </div>
                   </div>
                 </div>

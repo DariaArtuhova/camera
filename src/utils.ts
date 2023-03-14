@@ -26,7 +26,7 @@ export function deleteScrollLock () {
 }
 
 export const browserHistory = createBrowserHistory();
-export const calcMinGuitarsPrice = (cameras: CamerasType): number => {
+export const calcMinCamerasPrice = (cameras: CamerasType): number => {
   if(cameras.length <= 0) {
     return 0;
   }
@@ -42,7 +42,7 @@ export const calcMinGuitarsPrice = (cameras: CamerasType): number => {
   return min;
 };
 
-export const calcMaxGuitarsPrice = (cameras: CamerasType): number => {
+export const calcMaxCamerasPrice = (cameras: CamerasType): number => {
   if(cameras.length <= 0) {
     return 0;
   }
