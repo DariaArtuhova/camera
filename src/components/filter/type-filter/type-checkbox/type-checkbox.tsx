@@ -18,7 +18,7 @@ export function TypeCheckbox({id}: TypeCheckboxProps): JSX.Element {
     }
   };
 
-  const isTypeDisabled = currentParams.includes(LimitedFilter.Category) &&
+  const isTypeDisabled = currentParams.includes('Видеокамера') && !currentParams.includes('Фотоаппарат') &&
     (id === LimitedFilter.Type['Моментальная'] || id === LimitedFilter.Type['Плёночная']);
 
 

@@ -29,7 +29,7 @@ function PriceFilter(): JSX.Element {
   const handleMinPriceFilterChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const minPriceValue = Number(evt.target.value);
 
-    if (minPriceValue >= 0) {
+    if (minPriceValue > 0) {
       setMinPrice(minPriceValue);
     }
   };
@@ -64,7 +64,7 @@ function PriceFilter(): JSX.Element {
   const handleMaxPriceFilterChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const maxPriceValue = Number(evt.target.value);
 
-    if (maxPriceValue >= 0) {
+    if (maxPriceValue > 0) {
       setMaxPrice(maxPriceValue);
     }
   };
@@ -75,7 +75,7 @@ function PriceFilter(): JSX.Element {
       setMaxPrice(originalMaxPrice);
       updateUrlWithParams(QueryParamsList.PriceEnd, String(originalMaxPrice));
     } else if (maxPrice) {
-      if (maxPrice < minPrice) {
+      if (maxPrice < minPrice || maxPrice >= maxPriceInCameras) {
         setMaxPrice(maxPriceInCameras);
         updateUrlWithParams(
           QueryParamsList.PriceEnd,

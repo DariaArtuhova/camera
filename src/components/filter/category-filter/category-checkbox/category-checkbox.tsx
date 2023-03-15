@@ -19,7 +19,7 @@ export function CategoryCheckbox({id}: CategoryFilterProps): JSX.Element {
   };
 
   const isLimitedCategoryDisabled = (currentParams.includes(LimitedFilter.Type['Моментальная']) ||
-    currentParams.includes(LimitedFilter.Type['Плёночная'])) && id === LimitedFilter.Category;
+    currentParams.includes(LimitedFilter.Type['Плёночная'])) && id === 'Видеокамера' ;
 
   return (
     <input type="checkbox"

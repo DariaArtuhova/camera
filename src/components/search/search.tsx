@@ -8,7 +8,7 @@ import { KeyboardEvent } from 'react';
 export function Search() :JSX.Element {
   const camerasList = useAppSelector(getAllQuests);
   const [searchInput, setSearchInput] = useState('');
-  const filterList = camerasList.filter((camera) => camera.name.match(searchInput));
+  const filterList = camerasList.filter((camera) => camera.name.match(new RegExp(searchInput, 'i')));
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
