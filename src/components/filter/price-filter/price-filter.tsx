@@ -29,7 +29,7 @@ function PriceFilter(): JSX.Element {
   const handleMinPriceFilterChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const minPriceValue = Number(evt.target.value);
 
-    if (minPriceValue > 0) {
+    if (minPriceValue >= 0) {
       setMinPrice(minPriceValue);
     }
   };
