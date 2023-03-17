@@ -29,9 +29,7 @@ function PriceFilter(): JSX.Element {
   const handleMinPriceFilterChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const minPriceValue = Number(evt.target.value);
 
-    if (minPriceValue >= 0) {
-      setMinPrice(minPriceValue);
-    }
+    setMinPrice(minPriceValue);
   };
 
   const handleMinPriceFilterBlur = () => {
@@ -39,7 +37,7 @@ function PriceFilter(): JSX.Element {
       const originalMinPrice = calcMinCamerasPrice(originalCameras);
       setMinPrice(originalMinPrice);
       updateUrlWithParams(QueryParamsList.PriceStart, String(originalMinPrice));
-    } else if (minPrice) {
+    } else if (minPrice || minPrice !== 0) {
       const currentMaxPrice = maxPrice || maxPriceInCameras;
 
       if (minPrice < minPriceInCameras || minPrice >= currentMaxPrice) {
@@ -58,15 +56,16 @@ function PriceFilter(): JSX.Element {
           String(maxPriceInCameras),
         );
       }
+    } else {
+      setMinPrice(minPriceInCameras);
     }
   };
 
   const handleMaxPriceFilterChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const maxPriceValue = Number(evt.target.value);
 
-    if (maxPriceValue > 0) {
-      setMaxPrice(maxPriceValue);
-    }
+    setMaxPrice(maxPriceValue);
+
   };
 
   const handleMaxPriceFilterBlur = () => {
@@ -74,8 +73,8 @@ function PriceFilter(): JSX.Element {
       const originalMaxPrice = calcMaxCamerasPrice(originalCameras);
       setMaxPrice(originalMaxPrice);
       updateUrlWithParams(QueryParamsList.PriceEnd, String(originalMaxPrice));
-    } else if (maxPrice) {
-      if (maxPrice < minPrice || maxPrice >= maxPriceInCameras) {
+    } else if (maxPrice || maxPrice !== 0) {
+      if (maxPrice < minPrice || maxPrice > maxPriceInCameras) {
         setMaxPrice(maxPriceInCameras);
         updateUrlWithParams(
           QueryParamsList.PriceEnd,
@@ -91,8 +90,11 @@ function PriceFilter(): JSX.Element {
           String(minPriceInCameras),
         );
       }
+    } else {
+      setMaxPrice(maxPriceInCameras);
     }
   };
+
 
   return (
     <fieldset className="catalog-filter__block" data-testid="price-filter">
