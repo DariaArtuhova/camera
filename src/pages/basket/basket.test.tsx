@@ -2,29 +2,30 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import {makeCamera, makeCameraInBasket} from '../../mocks';
 import {Provider} from 'react-redux';
 import {render, screen} from '@testing-library/react';
-import {Camera} from './camera';
 import { MemoryRouter } from 'react-router-dom';
+import thunk from 'redux-thunk';
+import {Basket} from './basket';
 
-const mockStore = configureMockStore();
-const currentCamera = {...makeCamera(), id: 1};
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 const camerasInBasket = makeCameraInBasket;
+const cameras = Array.from({ length: 10 }, () => makeCamera());
 
 const store = mockStore({
-  camera: {currentCamera},
-  basket: {camerasInBasket: camerasInBasket},
-
+  camera: {cameras: cameras},
+  basket: { camerasInBasket: camerasInBasket},
 });
 
-describe('Component: CameraPage', () => {
+describe('Component: Basket', () => {
   it('should render correctly', () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
-          <Camera camera={currentCamera}/>
+          <Basket />
         </Provider>
       </MemoryRouter>
     );
 
-    expect(screen.getByTestId('product-card')).toBeInTheDocument();
+    expect(screen.getByText(/Скидка/i)).toBeInTheDocument();
   });
 });

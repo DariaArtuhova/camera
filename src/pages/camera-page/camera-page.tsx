@@ -140,7 +140,7 @@ export function CameraPage() : JSX.Element {
 
                       <a
                         className={`tabs__control ${queryParams.get(QueryParamsList.Feature) === CameraDetailsTypes.Feature ? 'is-active' : ''}`}
-                        href=''
+                        href='/#'
                         onClick={(evt) => {
                           evt.preventDefault();
                           handleCharacteristicClick();
@@ -152,7 +152,7 @@ export function CameraPage() : JSX.Element {
                       <a
                         className={`tabs__control ${queryParams.get(QueryParamsList.Feature) === CameraDetailsTypes.Description ? 'is-active' : ''}`}
                         type="button"
-                        href=''
+                        href='/#'
                         onClick={(evt) => {
                           evt.preventDefault();
                           handleDescriptionClick();

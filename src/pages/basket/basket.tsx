@@ -4,9 +4,9 @@ import {Header} from '../../components/header/header';
 import {useAppSelector} from '../../store';
 import {CameraBasket} from '../../components/camera-basket/camera-basket';
 import {BasketFooter} from '../../components/basket-footer/basket-footer';
-import {getCamerasInBasket} from '../../store/camera/camera-selector';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import {getCamerasInBasket} from '../../store/basket/basket-selector';
 
 
 export function Basket():JSX.Element {

@@ -1,8 +1,4 @@
 import {useAppDispatch, useAppSelector} from '../../store';
-import {
-  getCamerasInBasket,
-  getCoupon,
-} from '../../store/camera/camera-selector';
 import {ChangeEvent, FormEvent, useEffect, useRef, useState} from 'react';
 import {clearCart} from '../../store/basket/basket-reduser';
 import { postPromocodeDiscrountAction} from '../../services/api-actions';
@@ -11,6 +7,7 @@ import {PROMO_CODES} from '../../const';
 import {deleteScrollLock} from '../../utils';
 import {ProductBasketSuccess} from '../product-basket-success/product-basket-success';
 import {ErrorModal} from '../error-modal/error-modal';
+import {getCamerasInBasket, getCoupon} from '../../store/basket/basket-selector';
 
 
 export function BasketFooter():JSX.Element {

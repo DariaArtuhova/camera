@@ -1,5 +1,5 @@
-import {CameraTypeInBasket} from '../../store/basket/basket-reduser';
 import {CameraInBasket} from '../camera-in-basket/camera-in-basket';
+import {CameraTypeInBasket} from '../../types/camera-type';
 
 
 type CartListProps = {

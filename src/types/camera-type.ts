@@ -100,3 +100,7 @@ export type SortParams = {
   category?: string[];
   level?: string[];
 }
+export type CameraTypeInBasket = {
+  camera: CameraType;
+  count: number;
+}

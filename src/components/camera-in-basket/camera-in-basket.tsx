@@ -1,5 +1,4 @@
 import {
-  CameraTypeInBasket,
   decreaseProductCount,
   increaseProductCount,
   setCountCameraInBasket
@@ -8,6 +7,7 @@ import {useAppDispatch} from '../../store';
 import {ChangeEvent, useState} from 'react';
 import {DeleteModal} from '../delete-modal/delete-modal';
 import {deleteScrollLock, getScrollLock} from '../../utils';
+import {CameraTypeInBasket} from '../../types/camera-type';
 
 
 type CartItemProps = {
@@ -23,6 +23,7 @@ export function CameraInBasket({shoppingPosition}: CartItemProps): JSX.Element {
   const handleQuantityBlur = () => {
     const cameraInBasket = {...shoppingPosition};
     if(quantity === '') {
+      cameraInBasket.count = 1;
       dispatch(setCountCameraInBasket(cameraInBasket));
       setQuantity(1);
     }
@@ -115,7 +116,7 @@ export function CameraInBasket({shoppingPosition}: CartItemProps): JSX.Element {
               </svg>
             </button>
           </div>
-          <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{camera.price * Number(quantity)}
+          <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{camera.price * Number(shoppingPosition.count)}
           </div>
           <button className="cross-btn" type="button" aria-label="Удалить товар" onClick={() => {
             getScrollLock();

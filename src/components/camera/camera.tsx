@@ -6,7 +6,7 @@ import {deleteScrollLock, getScrollLock} from '../../utils';
 import {ModalBuyCamera} from '../modal-buy-camera/modal-buy-camera';
 import {useState} from 'react';
 import {useAppSelector} from '../../store';
-import {getCamerasInBasket} from '../../store/camera/camera-selector';
+import {getCamerasInBasket} from '../../store/basket/basket-selector';
 
 type CardProps = {
   camera: CameraType;

@@ -1,12 +1,7 @@
-import {CameraType} from '../../types/camera-type';
+import {CameraType, CameraTypeInBasket} from '../../types/camera-type';
 import { NameSpace} from '../../const';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {postPromocodeDiscrountAction} from '../../services/api-actions';
-
-export type CameraTypeInBasket = {
-  camera: CameraType;
-  count: number;
-}
 
 export type CartProcessType = {
   camerasInBasket: {
@@ -44,11 +39,11 @@ export const CartProcess = createSlice({
       delete state.camerasInBasket[action.payload.id];
       localStorage.setItem('camerasInBasket', JSON.stringify(state.camerasInBasket));
     },
-    checkSaveCameraInBasket: (state) => {
+    /*checkSaveCameraInBasket: (state) => {
       if(localStorage.getItem('camerasInBasket')) {
         state.camerasInBasket = JSON.parse(localStorage.getItem('camerasInBasket') || '') as CameraType;
       }
-    },
+    },*/
     setCountCameraInBasket: (state, action: PayloadAction<CameraTypeInBasket>) => {
       state.camerasInBasket[action.payload.camera.id].count = action.payload.count;
       localStorage.setItem('camerasInBasket', JSON.stringify(state.camerasInBasket));
@@ -76,7 +71,6 @@ export const CartProcess = createSlice({
   }
 });
 export const {setCameraInBasket,
-  checkSaveCameraInBasket,
   setCountCameraInBasket,
   increaseProductCount,
   decreaseProductCount,

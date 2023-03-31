@@ -1,16 +1,20 @@
 import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import {makeCamera} from '../../mocks';
+import {makeCamera, makeCameraInBasket} from '../../mocks';
 import {SimilarList} from './similar-list';
 import {BrowserRouter} from 'react-router-dom';
 
 const mockStore = configureMockStore();
 
 const cameras = Array.from({ length: 2 }, () => makeCamera());
+const camerasInBasket = makeCameraInBasket;
+
 
 const store = mockStore({
   camera: {similar: cameras },
+  basket: {camerasInBasket: camerasInBasket}
+
 });
 
 describe('Component: SimilarList', () => {

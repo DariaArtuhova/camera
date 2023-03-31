@@ -19,6 +19,14 @@ export const makeCamera = (): CameraType => ({
   'reviewCount': datatype.number(10),
 });
 
+export const makeCameraInBasket = {
+  1: {camera:  makeCamera(), count: 1},
+};
+
+export const makeShoppingPosition = {
+  camera:  makeCamera(), count: 1,
+};
+
 export const makeCameras = () => {
   const cameras: CamerasType = [];
   for (let i = 0; i < 2; i++) {

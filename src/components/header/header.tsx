@@ -3,7 +3,7 @@ import {AppRoute} from '../../const';
 import {memo, useEffect, useState} from 'react';
 import {Search} from '../search/search';
 import {useAppSelector} from '../../store';
-import {getCamerasInBasket} from '../../store/camera/camera-selector';
+import {getCamerasInBasket} from '../../store/basket/basket-selector';
 
 export function Header(): JSX.Element {
   const camerasInBasket = useAppSelector(getCamerasInBasket);
