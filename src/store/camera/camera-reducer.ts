@@ -20,7 +20,6 @@ export type InitialState = {
   similar: CamerasType;
   isLoading: boolean;
   countCameras: number;
-
 }
 export const initialState: InitialState = {
   cameras: [],
@@ -29,7 +28,7 @@ export const initialState: InitialState = {
   error: null,
   similar: [],
   isLoading: false,
-  countCameras: 0
+  countCameras: 0,
 };
 
 export const cameraReducer = createReducer(initialState, (builder) => {
@@ -37,7 +36,7 @@ export const cameraReducer = createReducer(initialState, (builder) => {
     .addCase(fetchCurrentCameraAction.fulfilled, (state, action) => {
       state.currentCamera = action.payload;
     })
-    .addCase(fetchCurrentCameraAction.rejected, (state, action) => {
+    .addCase(fetchCurrentCameraAction.rejected, (state) => {
       state.isLoading = false;
     })
     .addCase(fetchCurrentCameraAction.pending, (state) => {
@@ -75,4 +74,5 @@ export const cameraReducer = createReducer(initialState, (builder) => {
     .addCase(setCountCameras, (state, action) => {
       state.countCameras = action.payload;
     });
+
 });

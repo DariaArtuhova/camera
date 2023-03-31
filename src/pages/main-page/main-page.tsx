@@ -16,6 +16,7 @@ import {QueryParamsList} from '../../const';
 import {useUpdateUrlWithParams} from '../../hooks/useUpdate';
 import {CamerasType, SortParams} from '../../types/camera-type';
 
+
 export function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
@@ -108,6 +109,7 @@ export function MainPage(): JSX.Element {
           </main>
       }
       <Footer/>
+
     </div>
   );
 }

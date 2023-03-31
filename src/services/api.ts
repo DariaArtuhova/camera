@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig} from 'axios';
 import {getToken} from './token';
+import {ApiRoute, TPostOrderActionPayload} from '../const';
 
 
 const BACKEND_URL = 'https://camera-shop.accelerator.pages.academy';
@@ -24,4 +25,10 @@ export const createAPI = (): AxiosInstance => {
   );
 
   return api;
+};
+export const sendOrder = async (orderData: TPostOrderActionPayload) => {
+  const api = createAPI();
+
+  const { data } = await api.post<number>(`${ApiRoute.Orders}`, orderData);
+  return data;
 };

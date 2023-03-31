@@ -65,7 +65,7 @@ export function NewComment({isVisible, onClose, cameraId}: newCommentProps): JSX
       }`}
       >
         <div className="modal__wrapper">
-          <div className="modal__overlay" onClick={onClose}></div>
+          <div className="modal__overlay" onClick={onClose}/>
           <div className="modal__content">
             <p className="title title--h4">Оставить отзыв</p>
             <div className="form-review">

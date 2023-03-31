@@ -1,12 +1,15 @@
 import {ReviewList} from '../../components/review-list/review-list';
 import {Link, useParams} from 'react-router-dom';
 import {AppRoute, CameraDetailsTypes, QueryParamsList} from '../../const';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {Helmet} from 'react-helmet';
 import {Header} from '../../components/header/header';
 import {Footer} from '../../components/footer/footer';
 import {useAppDispatch, useAppSelector} from '../../store';
-import {getCamerasDataLoadingStatus, getCurrentCameras} from '../../store/camera/camera-selector';
+import {
+  getCamerasDataLoadingStatus,
+  getCurrentCameras,
+} from '../../store/camera/camera-selector';
 import {fetchCurrentCameraAction, fetchReviewsAction, fetchSimilarCameras} from '../../services/api-actions';
 import {Loading} from '../../components/loading/loading';
 import {SimilarList} from '../../components/similar-list/similar-list';
@@ -15,6 +18,8 @@ import {ShowMoreButton} from '../../components/show-more-button/show-more-button
 import {Rating} from '../../components/rating/rating';
 import {Error} from '../error/error';
 import {useUpdateUrlWithParams} from '../../hooks/useUpdate';
+import {deleteScrollLock, getScrollLock} from '../../utils';
+import {ModalBuyCamera} from '../../components/modal-buy-camera/modal-buy-camera';
 
 
 export function CameraPage() : JSX.Element {
@@ -27,6 +32,8 @@ export function CameraPage() : JSX.Element {
   const allReview = useAppSelector(getAllReviews);
   const reviewCounter = useAppSelector((state) => state.review.reviewCounter);
   const isButtonActive = allReview.length > reviewCounter;
+  const [isModal, setModal] = useState(false);
+
 
   useEffect(() => {
     dispatch(fetchCurrentCameraAction(param));
@@ -118,7 +125,11 @@ export function CameraPage() : JSX.Element {
                   </div>
                   <p className="product__price"><span className="visually-hidden">Цена:</span>{currentCamera.price} ₽
                   </p>
-                  <button className="btn btn--purple" type="button">
+                  <button className="btn btn--purple" type="button" onClick={() => {
+                    getScrollLock();
+                    setModal(true);
+                  }}
+                  >
                     <svg width="24" height="16" aria-hidden="true">
                       <use xlinkHref="#icon-add-basket"/>
                     </svg>
@@ -191,6 +202,14 @@ export function CameraPage() : JSX.Element {
           </div>
         </div>
         <Footer/>
+        <ModalBuyCamera
+          openModal={isModal}
+          currentCamera={currentCamera}
+          onClose={() => {
+            deleteScrollLock();
+            setModal(false);
+          }}
+        />
       </>
     );
   }

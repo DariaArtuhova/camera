@@ -1,9 +1,22 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
-import {memo} from 'react';
+import {memo, useEffect, useState} from 'react';
 import {Search} from '../search/search';
+import {useAppSelector} from '../../store';
+import {getCamerasInBasket} from '../../store/camera/camera-selector';
 
 export function Header(): JSX.Element {
+  const camerasInBasket = useAppSelector(getCamerasInBasket);
+  const [countGuitarsInCart, setCountGuitarsInCart] = useState(0);
+
+  useEffect(() => {
+    let count = 0;
+    Object.values(camerasInBasket).forEach((cameraInBasket) => {
+      count += cameraInBasket.count;
+    });
+
+    setCountGuitarsInCart(count);
+  }, [camerasInBasket]);
   return (
     <header className="header" id="header">
       <div className="container">
@@ -29,6 +42,8 @@ export function Header(): JSX.Element {
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket"/>
           </svg>
+          {countGuitarsInCart > 0 && <span className="header__basket-count">{countGuitarsInCart}</span>}
+
         </Link>
       </div>
     </header>

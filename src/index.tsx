@@ -5,7 +5,9 @@ import {store} from './store';
 import {Provider} from 'react-redux';
 import HistoryRouter from './components/history-router/history-router';
 import {createBrowserHistory} from 'history';
+import {checkSaveCameraInBasket} from './store/basket/basket-reduser';
 
+store.dispatch(checkSaveCameraInBasket()) ;
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

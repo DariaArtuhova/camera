@@ -4,6 +4,7 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {createAPI} from '../services/api';
 import {cameraReducer} from './camera/camera-reducer';
 import {reviewReducer} from './review/review-reducer';
+import {CartProcess} from './basket/basket-reduser';
 
 export const api = createAPI();
 
@@ -11,6 +12,7 @@ export const store = configureStore({
   reducer: {
     camera: cameraReducer,
     review: reviewReducer,
+    basket: CartProcess.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

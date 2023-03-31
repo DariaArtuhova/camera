@@ -1,4 +1,4 @@
-import {ApiRoute} from '../const';
+import {ApiRoute, TPostOrderActionPayload} from '../const';
 import {CamerasType, CameraType, PromoType, SortParams} from '../types/camera-type';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
@@ -112,4 +112,26 @@ export const fetchCamerasWithParamsAction = createAsyncThunk<void, SortParams, {
     dispatch(setCountCameras(data.length));
     dispatch(loadCameras(data));
   },
+);
+
+
+export const postPromocodeDiscrountAction = createAsyncThunk<undefined, string, {
+  extra: AxiosInstance;
+}>(
+  'camera/sendCouponAction',
+  async (coupon, {extra: api}) => {
+    const {data} = await api.post<undefined>(ApiRoute.Coupons, {coupon});
+    return data;
+  },
+);
+
+export const postOrderAction = createAsyncThunk<void, TPostOrderActionPayload, {
+  dispatch: AppDispatch;
+  state: Store;
+  extra: AxiosInstance;
+}>(
+  'orders/postOrder',
+  async (order, {extra: api}) => {
+    await api.post(ApiRoute.Orders, order);
+  }
 );

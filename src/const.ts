@@ -1,3 +1,4 @@
+
 export enum AppRoute {
   Basket = '/basket',
   Catalog = '/page_:pageNumber/',
@@ -11,7 +12,14 @@ export enum ApiRoute {
   Reviews = '/reviews',
   Similar = '/similar',
   Promo = '/promo',
+  Coupons = '/coupons',
+  Orders = '/orders'
 }
+export type TPostOrderActionPayload = {
+  camerasIds: number[];
+  coupon: string | null;
+}
+export const PROMO_CODES = ['camera-333', 'camera-444', 'camera-555'];
 
 export const pages = [
   1, 2, 3, 4, 5, 6, 7, 8, 9 ,10
@@ -182,3 +190,6 @@ export const FILTER_CAMERA_TYPES = [
     isChecked: false
   },
 ];
+export const enum NameSpace {
+  Basket = 'basket',
+}

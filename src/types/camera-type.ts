@@ -89,6 +89,7 @@ export const promo: PromoType =
       'previewImgWebp2x': 'img/cameras/promo@2x.webp'
     };
 
+
 export type SortParams = {
   sort?: string;
   order?: string;
