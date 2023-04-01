@@ -45,6 +45,10 @@ export function BasketFooter():JSX.Element {
   }, [dispatch, coupon, allPriceValue]);
 
   const handleCouponInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    if (evt.target.value.includes(' ')) {
+      evt.target.value = evt.target.value.replace(/\s/g, '');
+      return;
+    }
     dispatch((postPromocodeDiscrountAction(evt.target.value.replace(/\s/g, ''))));
   };
 

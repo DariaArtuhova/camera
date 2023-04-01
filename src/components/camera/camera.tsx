@@ -14,7 +14,7 @@ type CardProps = {
 export function Camera({camera}: CardProps): JSX.Element {
   const {id, name, previewImg, previewImg2x, price, previewImgWebp2x, reviewCount, rating} = camera;
   const [isModal, setModal] = useState(false);
-  const guitarsInCart = useAppSelector(getCamerasInBasket);
+  const camerasInBasket = useAppSelector(getCamerasInBasket);
 
   return (
     <>
@@ -42,7 +42,7 @@ export function Camera({camera}: CardProps): JSX.Element {
         </div>
         <div className="product-card__buttons">
           {
-            guitarsInCart[camera.id] ?
+            camerasInBasket[camera.id] ?
               <Link to={AppRoute.Basket} className="btn btn--purple-border product-card__btn product-card__btn--in-cart" >
                 <svg width="16" height="16" aria-hidden="true">
                   <use xlinkHref="#icon-basket"/>
